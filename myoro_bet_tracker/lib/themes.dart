@@ -29,12 +29,8 @@ final ThemeData dark = ThemeData(
     onSurface:    Color(0xFFEDE6D6)
   ),
   textTheme: TextTheme(
-    bodyMedium:  _normal(color: const Color(0xFFEDE6D6), fontSize: 16),
-    bodySmall:   _normal(color: const Color(0xFFEDE6D6), fontSize: 12),
-    titleLarge:  _normal(color: const Color(0xFFEDE6D6), fontSize: 24),
-    titleMedium: _normal(color: const Color(0xFFEDE6D6), fontSize: 20),
-    labelLarge:  _bold(color: const Color(0xFFEDE6D6), fontSize: 24),
-    labelMedium: _bold(color: const Color(0xFFEDE6D6), fontSize: 16)
+    bodyMedium: _normal(color: const Color(0xFFEDE6D6), fontSize: 16),
+    bodySmall:  _normal(color: const Color(0xFFEDE6D6), fontSize: 14)
   ),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor:    const Color(0xFFEDE6D6),
@@ -57,16 +53,11 @@ final ThemeData light = ThemeData(
     onSurface:    Color(0xFF181818)
   ),
   textTheme: TextTheme(
-    bodyMedium:  _normal(color: const Color(0xFF181818), fontSize: 16),
-    bodySmall:   _normal(color: const Color(0xFF181818), fontSize: 12),
-    titleLarge:  _normal(color: const Color(0xFF181818), fontSize: 24),
-    titleMedium: _normal(color: const Color(0xFF181818), fontSize: 20),
-    labelLarge:  _bold(color: const Color(0xFF181818), fontSize: 16),
-    labelMedium: _bold(color: const Color(0xFF181818), fontSize: 16)
+    bodyMedium: _normal(color: const Color(0xFF181818), fontSize: 16),
+    bodySmall:  _normal(color: const Color(0xFF181818), fontSize: 14)
   ),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor:    const Color(0xFF181818),
     selectionColor: const Color(0xFF181818).withOpacity(0.2)
   )
-
 );
