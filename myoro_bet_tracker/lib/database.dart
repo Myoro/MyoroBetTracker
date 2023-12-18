@@ -42,6 +42,16 @@ class Database {
     final Map<String, Object?> row = await get("dark_mode");
     if(row.isEmpty)
       insert("dark_mode", { "enabled": 1 });
+
+    // bets
+    await _db.execute('''
+      CREATE TABLE IF NOT EXISTS bets(
+        id      INTEGER PRIMARY KEY AUTOINCREMENT,
+        placed  TEXT,
+        gained  TEXT,
+        bet_won INTEGER
+      );
+    ''');
   }
 
   Future<void> resetDatabase() async {
@@ -65,4 +75,16 @@ class Database {
   }
 
   Future<void> insert(String table, Map<String, dynamic> data) async => await _db.insert(table, data);
+
+  Future<void> update(String table, String attribute, dynamic data, [Map<String, dynamic>? conditions]) async {
+    await _db.update(
+      table,
+      { attribute: data },
+      where: (conditions != null) ? "${conditions.keys.first} = ${conditions.values.first}" : null
+    );
+  }
+
+  Future<void> delete(String table, int index) async {
+    await _db.delete(table, where: "id = $index");
+  }
 }

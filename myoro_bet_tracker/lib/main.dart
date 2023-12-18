@@ -1,6 +1,7 @@
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:myoro_bet_tracker/bloc/bet_cubit.dart";
 import "package:myoro_bet_tracker/bloc/dark_mode_cubit.dart";
 import "package:myoro_bet_tracker/database.dart";
 import "package:myoro_bet_tracker/screen.dart";
@@ -13,9 +14,14 @@ void main() async {
   final Map<String, Object?> row = await Database().get("dark_mode");
   final bool darkModeEnabled = (row["enabled"] == 1) ? true : false;
 
+  final List<Map<String, Object?>> rows = await Database().select("bets");
+
   runApp(
-    BlocProvider(
-      create: (context) => DarkModeCubit(darkModeEnabled),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => DarkModeCubit(darkModeEnabled)),
+        BlocProvider(create: (context) => BetCubit(rows))
+      ],
       child: const App()
     )
   );

@@ -40,19 +40,20 @@ class _HoverButtonState extends State<HoverButton> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              if(widget.icon != null) ...[
+                Icon(
+                  widget.icon,
+                  size: 20, color: hovered ? theme.colorScheme.primary : theme.colorScheme.onPrimary
+                ),
+                const SizedBox(width: 3)
+              ],
               Text(
                 widget.buttonText,
                 style: theme.textTheme.bodySmall!.copyWith(
                   color: hovered ? theme.colorScheme.primary : theme.colorScheme.onPrimary,
+                  fontSize: 12
                 )
-              ),
-              if(widget.icon != null) ...[
-                const SizedBox(width: 3),
-                Icon(
-                  widget.icon,
-                  size: 20, color: hovered ? theme.colorScheme.primary : theme.colorScheme.onPrimary
-                )
-              ]
+              )
             ]
           ),
         ),
