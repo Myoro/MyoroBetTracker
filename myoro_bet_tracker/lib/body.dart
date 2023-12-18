@@ -11,15 +11,15 @@ class Body extends StatelessWidget {
 
     return Center(
       child: SizedBox(
-        width: 220,
+        width: 300,
         child: ListView(
           children: [
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InputField(width: 104, placeholder: "\$ Placed"),
+                Expanded(child: InputField(placeholder: "Money Placed")),
                 SizedBox(width: 10),
-                InputField(width: 104, placeholder: "\$ Won")
+                Expanded(child: InputField(placeholder: "Money Won")),
               ]
             ),
             const SizedBox(height: 20),
