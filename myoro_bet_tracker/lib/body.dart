@@ -17,9 +17,9 @@ class Body extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: InputField(placeholder: "Money Placed")),
+                InputField(placeholder: "Money Placed"),
                 SizedBox(width: 10),
-                Expanded(child: InputField(placeholder: "Money Won")),
+                InputField(placeholder: "Money Won"),
               ]
             ),
             const SizedBox(height: 20),

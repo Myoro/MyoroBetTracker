@@ -15,13 +15,15 @@ class InputField extends StatelessWidget {
       borderSide: BorderSide(color: theme.colorScheme.onPrimary)
     );
 
-    return TextField(
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        focusedBorder: border,
-        enabledBorder: border,
-        hintText: placeholder
-      )
+    return Expanded(
+      child: TextField(
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          focusedBorder: border,
+          enabledBorder: border,
+          hintText: placeholder
+        )
+      ),
     );
   }
 }
