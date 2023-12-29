@@ -1,7 +1,7 @@
 class BetModel {
   final int id;
-  final double placed;
-  final double won;
+  double placed;
+  double won;
 
   BetModel({ this.id = 0, this.placed = 0, this.won = 0 });
 

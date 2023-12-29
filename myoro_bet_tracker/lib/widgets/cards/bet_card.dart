@@ -4,7 +4,7 @@ import 'package:myoro_bet_tracker/bloc/betting_bloc.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/icon_and_text_hover_button.dart';
 import 'package:myoro_bet_tracker/widgets/inputs/input.dart';
 
-class BetCard extends StatelessWidget {
+class BetCard extends StatefulWidget {
   final int id;
   final int index;
   final bool editing;
@@ -21,8 +21,36 @@ class BetCard extends StatelessWidget {
   });
 
   @override
+  State<BetCard> createState() => _BetCardState();
+}
+
+class _BetCardState extends State<BetCard> {
+  final TextEditingController _placedController = TextEditingController();
+  final TextEditingController _wonController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _placedController.dispose();
+    _wonController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+
+   void saveBet() {
+      if(_placedController.text.isEmpty || _wonController.text.isEmpty) return;
+
+      try {
+        BlocProvider.of<BettingBloc>(context).add(SaveBetEvent(
+          widget.id,
+          widget.index,
+          double.parse(double.parse(_placedController.text).toStringAsFixed(2)),
+          double.parse(double.parse(_wonController.text).toStringAsFixed(2))
+        ));
+      } catch(e) { print('Invalid Input'); }
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -39,20 +67,28 @@ class BetCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: editing
-                    ? const SizedBox(height: 40, child: Input(hintText: '\$ Placed'))
+                  child: widget.editing
+                    ? SizedBox(height: 40, child: Input(controller: _placedController, hintText: '\$ Placed'))
                     : Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Text('\$$placed', style: theme.textTheme.displayMedium, textAlign: TextAlign.center)
+                      child: Text(
+                        '\$${widget.placed.toStringAsFixed(2)}',
+                        style: theme.textTheme.displayMedium, textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis
+                      )
                     )
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: editing
-                    ? const SizedBox(height: 40, child: Input(hintText: '\$ Won/Lost'))
+                  child: widget.editing
+                    ? SizedBox(height: 40, child: Input(controller: _wonController, hintText: '\$ Won/Lost'))
                     : Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Text('\$$won', style: theme.textTheme.displayMedium, textAlign: TextAlign.center)
+                      child: Text(
+                        '\$${widget.won.toStringAsFixed(2)}',
+                        style: theme.textTheme.displayMedium, textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis
+                      )
                     )
                 )
               ]
@@ -62,9 +98,11 @@ class BetCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: IconAndTextHoverButton(
-                    onTap: editing ? () => print('Save Bet') : () => print('Edit Bet'),
-                    icon: editing ? Icons.save : Icons.add,
-                    text: editing ? 'Save Bet' : 'Edit Bet',
+                    onTap: widget.editing
+                      ? () => saveBet()
+                      : () => BlocProvider.of<BettingBloc>(context).add(EditBetEvent(widget.index)),
+                    icon: widget.editing ? Icons.save : Icons.add,
+                    text: widget.editing ? 'Save Bet' : 'Edit Bet',
                     padding: const EdgeInsets.only(top: 5, bottom: 5, right: 5),
                     textStyle: theme.textTheme.bodyMedium
                   ),
@@ -72,11 +110,11 @@ class BetCard extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: IconAndTextHoverButton(
-                    onTap: editing
-                      ? () => print('Cancel')
-                      : () => BlocProvider.of<BettingBloc>(context).add(DeleteBetEvent(id, index)),
-                    icon: editing ? Icons.cancel : Icons.delete,
-                    text: editing ? 'Cancel' : 'Delete Bet',
+                    onTap: widget.editing
+                      ? () => BlocProvider.of<BettingBloc>(context).add(ResetSelectedBetEvent())
+                      : () => BlocProvider.of<BettingBloc>(context).add(DeleteBetEvent(widget.id, widget.index)),
+                    icon: widget.editing ? Icons.cancel : Icons.delete,
+                    text: widget.editing ? 'Cancel' : 'Delete Bet',
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     textStyle: theme.textTheme.bodyMedium
                   ),

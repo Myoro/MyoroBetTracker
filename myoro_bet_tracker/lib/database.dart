@@ -54,4 +54,13 @@ class Database {
       List<Object?>? whereArgs
     }
   ) async => await _db.delete(table, where: where, whereArgs: whereArgs);
+
+  static Future<void> update(
+    String table,
+    Map<String, Object?> values,
+    {
+      String? where,
+      List<Object?>? whereArgs
+    }
+  ) async => await _db.update(table, values, where: where, whereArgs: whereArgs);
 }
