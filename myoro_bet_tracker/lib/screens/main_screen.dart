@@ -9,29 +9,27 @@ class MainScreen extends StatelessWidget {
   const MainScreen({ super.key });
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<BetsBloc, BetsState>(
-    builder: (context, state) => Scaffold(
-      appBar: const MainScreenTopBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: [
-            BetsTable(bets: state.bets),
-            const SizedBox(height: 10),
-            IconAndTextHoverButton(
-              onTap: () => BlocProvider.of<BetsBloc>(context).add(AddBetEvent()), // TODO
-              icon: Icons.add,
-              text: 'Add Bet'
-            ),
-            const SizedBox(height: 10),
-            IconAndTextHoverButton(
-              onTap: () {}, // TODO
-              icon: Icons.attach_money,
-              text: 'Add Available Income'
-            )
-          ]
-        ),
-      )
-    ),
+  Widget build(BuildContext context) => Scaffold(
+    appBar: const MainScreenTopBar(),
+    body: Padding(
+      padding: const EdgeInsets.all(10),
+      child: ListView(
+        children: [
+          const BetsTable(),
+          const SizedBox(height: 10),
+          IconAndTextHoverButton(
+            onTap: () => BlocProvider.of<BetsBloc>(context).add(AddBetEvent()), // TODO
+            icon: Icons.add,
+            text: 'Add Bet'
+          ),
+          const SizedBox(height: 10),
+          IconAndTextHoverButton(
+            onTap: () {}, // TODO
+            icon: Icons.attach_money,
+            text: 'Add Available Income'
+          )
+        ]
+      ),
+    )
   );
 }
