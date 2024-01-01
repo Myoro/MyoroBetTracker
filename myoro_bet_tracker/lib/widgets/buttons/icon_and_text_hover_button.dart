@@ -47,6 +47,7 @@ class _IconAndTextHoverButtonState extends State<IconAndTextHoverButton> {
                   widget.icon,
                   color: hovered ? theme.colorScheme.primary : theme.colorScheme.onPrimary
                 ),
+                const SizedBox(width: 5),
                 Text(
                   widget.text,
                   style: theme.textTheme.bodyMedium!.copyWith(

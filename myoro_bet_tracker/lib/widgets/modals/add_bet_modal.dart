@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myoro_bet_tracker/inputs/basic_dropdown.dart';
 import 'package:myoro_bet_tracker/inputs/basic_input.dart';
+import 'package:myoro_bet_tracker/widgets/buttons/icon_and_text_hover_button.dart';
 import 'package:myoro_bet_tracker/widgets/modals/basic_modal.dart';
 
 class AddBetModal extends StatelessWidget {
@@ -17,29 +18,53 @@ class AddBetModal extends StatelessWidget {
 
     return BasicModal(
       title: 'Add Bet',
-      width: 500,
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      width: 350,
+      body: Material( // For BasicInput & BasicDropdown to work
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
             children: [
-              for(final String title in titles)
-                Text('$title:', style: Theme.of(context).textTheme.bodyMedium)
+              for(final String title in titles) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '$title:',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.right
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    if(title != 'Sport(?)')
+                      const Expanded(child: BasicInput())
+                    else
+                      const Expanded(child: BasicDropdown())
+                  ]
+                ),
+                const SizedBox(height: 10)
+              ],
+              Row(
+                children: [
+                  Expanded(
+                    child: IconAndTextHoverButton(
+                      onTap: () {}, // TODO
+                      icon: Icons.add,
+                      text: 'Add Bet'
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: IconAndTextHoverButton(
+                      onTap: () {}, // TODO
+                      icon: Icons.cancel,
+                      text: 'Cancel'
+                    ),
+                  )
+                ]
+              )
             ]
           ),
-          const SizedBox(width: 20),
-          const Material( // So TextFields will work property in modals
-            child: Column(
-              children: [
-                BasicInput(),
-                BasicDropdown(),
-                BasicInput(),
-                BasicInput()
-              ]
-            )
-          )
-        ]
+        ),
       )
     );
   }

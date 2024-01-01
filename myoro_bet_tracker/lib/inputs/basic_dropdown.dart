@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class BasicDropdown extends StatelessWidget {
+  final double width;
   final double height;
 
-  const BasicDropdown({ super.key, this.height = 40 });
+  const BasicDropdown({
+    super.key,
+    this.height = 40,
+    this.width = 100
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +16,7 @@ class BasicDropdown extends StatelessWidget {
 
     return Container(
       height: height,
+      width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
@@ -19,6 +25,7 @@ class BasicDropdown extends StatelessWidget {
         )
       ),
       child: DropdownButton(
+        isExpanded: true,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         underline: Container(), // Removes the default underline
         items: [

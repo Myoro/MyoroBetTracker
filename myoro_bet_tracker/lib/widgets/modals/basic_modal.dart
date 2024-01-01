@@ -27,25 +27,28 @@ class BasicModal extends StatelessWidget {
             width: 2
           )
         ),
-        width: 500,
+        width: width,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  Text(title, style: theme.textTheme.titleLarge),
-                  const Spacer(),
-                  ButtonWithoutFeedback(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(
-                      Icons.close,
-                      size: 30,
-                      color: theme.colorScheme.onPrimary
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Row(
+                  children: [
+                    Text(title, style: theme.textTheme.titleLarge),
+                    const Spacer(),
+                    ButtonWithoutFeedback(
+                      onTap: () => Navigator.pop(context),
+                      child: Icon(
+                        Icons.close,
+                        size: 30,
+                        color: theme.colorScheme.onPrimary
+                      )
                     )
-                  )
-                ]
+                  ]
+                ),
               ),
               body
             ]
