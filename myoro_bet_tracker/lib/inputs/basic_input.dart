@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class BasicInput extends StatelessWidget {
   final double width;
   final double height;
+  final String? hintText;
 
   const BasicInput({
     super.key,
     this.width = 100,
-    this.height = 40
+    this.height = 40,
+    this.hintText
   });
 
   @override
@@ -29,7 +31,8 @@ class BasicInput extends StatelessWidget {
         decoration: InputDecoration(
           enabledBorder:  border,
           focusedBorder:  border,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10)
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          hintText: hintText
         ),
         controller: TextEditingController()
       ),

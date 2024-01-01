@@ -28,17 +28,28 @@ class AddBetModal extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        '$title:',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        textAlign: TextAlign.right
-                      ),
+                      child: title != '\$ Gained/Lost'
+                        ?
+                        Text(
+                          '$title:',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.right
+                        )
+                        :
+                        const BasicDropdown(
+                          items: [ 'Gained', 'Lost' ]
+                        )
                     ),
                     const SizedBox(width: 10),
                     if(title != 'Sport(?)')
-                      const Expanded(child: BasicInput())
+                      Expanded(child: BasicInput(hintText: title))
                     else
-                      const Expanded(child: BasicDropdown())
+                      const Expanded(child: BasicDropdown(items: [
+                        'Soccer',
+                        'Basketball',
+                        'Hockey',
+                        'Not Sport'
+                      ]))
                   ]
                 ),
                 const SizedBox(height: 10)
@@ -55,7 +66,7 @@ class AddBetModal extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: IconAndTextHoverButton(
-                      onTap: () {}, // TODO
+                      onTap: () => Navigator.pop(context),
                       icon: Icons.cancel,
                       text: 'Cancel'
                     ),
