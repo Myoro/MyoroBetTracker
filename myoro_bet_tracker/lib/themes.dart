@@ -15,6 +15,11 @@ final ThemeData dark = ThemeData(
     onSurface:    Color(0xFFEDE6D6)
   ),
   textTheme: const TextTheme(
+    titleLarge: TextStyle(
+      fontSize:   30,
+      fontWeight: FontWeight.bold,
+      color:     Color(0xFFEDE6D6)
+    ),
     titleMedium: TextStyle(
       fontSize:   20,
       fontWeight: FontWeight.bold,
@@ -24,6 +29,11 @@ final ThemeData dark = ThemeData(
       fontSize: 20,
       color:    Color(0xFFEDE6D6)
     )
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor:          const Color(0xFFEDE6D6),
+    selectionColor:       const Color(0xFFEDE6D6).withOpacity(0.3),
+    selectionHandleColor: const Color(0xFFEDE6D6)
   )
 );
 
@@ -42,6 +52,11 @@ final ThemeData light = ThemeData(
     onSurface:    Color(0xFF181818)
   ),
   textTheme: const TextTheme(
+    titleLarge: TextStyle(
+      fontSize:   30,
+      fontWeight: FontWeight.bold,
+      color:     Color(0xFF181818)
+    ),
     titleMedium: TextStyle(
       fontSize:   20,
       fontWeight: FontWeight.bold,
@@ -51,5 +66,10 @@ final ThemeData light = ThemeData(
       fontSize: 20,
       color:    Color(0xFF181818)
     )
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor:          const Color(0xFF181818),
+    selectionColor:       const Color(0xFF181818).withOpacity(0.3),
+    selectionHandleColor: const Color(0xFF181818)
   )
 );
