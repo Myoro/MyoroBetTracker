@@ -26,11 +26,11 @@ class Database {
     );
 
     // Dark mode table
-    _database.execute('CREATE TABLE IF NOT EXISTS dark_mode(id INTEGER PRIMARY KEY, enabled INTEGER);');
+    await _database.execute('CREATE TABLE IF NOT EXISTS dark_mode(id INTEGER PRIMARY KEY, enabled INTEGER);');
     if((await get('dark_mode')).isEmpty) _database.insert('dark_mode', { 'enabled': 1 });
 
     // Bets table
-    _database.execute('''
+    await _database.execute('''
       CREATE TABLE IF NOT EXISTS bets(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name           TEXT,

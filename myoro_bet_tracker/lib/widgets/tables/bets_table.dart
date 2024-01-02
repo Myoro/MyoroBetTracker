@@ -57,7 +57,7 @@ class BetsTable extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ButtonWithoutFeedback(
-                      onTap: () => print('Start filter'), // TODO
+                      onTap: () => BlocProvider.of<BetsBloc>(context).add(FilterBets(title)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
