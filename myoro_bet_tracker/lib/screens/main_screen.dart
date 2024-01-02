@@ -11,29 +11,34 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const MainScreenTopBar(),
-    body: Padding(
-      padding: const EdgeInsets.all(10),
-      child: ListView(
-        children: [
-          const BetsGraph(),
-          const BetsTable(),
-          const SizedBox(height: 10),
-          IconAndTextHoverButton(
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => const AddBetModal()
-            ),
-            icon: Icons.add,
-            text: 'Add Bet'
-          ),
-          const SizedBox(height: 10),
-          IconAndTextHoverButton(
-            onTap: () {}, // TODO
-            icon: Icons.attach_money,
-            text: 'Add Available Income'
+    body: ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+          child: Column(
+            children: [
+              const BetsGraph(),
+              const SizedBox(height: 50),
+              const BetsTable(),
+              const SizedBox(height: 50),
+              IconAndTextHoverButton(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => const AddBetModal()
+                ),
+                icon: Icons.add,
+                text: 'Add Bet'
+              ),
+              const SizedBox(height: 10),
+              IconAndTextHoverButton(
+                onTap: () {}, // TODO
+                icon: Icons.attach_money,
+                text: 'Add Available Income'
+              )
+            ]
           )
-        ]
-      ),
+        )
+      ]
     )
   );
 }
