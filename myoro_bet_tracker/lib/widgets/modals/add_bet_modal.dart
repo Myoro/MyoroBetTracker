@@ -1,82 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:myoro_bet_tracker/inputs/basic_dropdown.dart';
-import 'package:myoro_bet_tracker/inputs/basic_input.dart';
-import 'package:myoro_bet_tracker/widgets/buttons/icon_and_text_hover_button.dart';
+import 'package:myoro_bet_tracker/widgets/inputs/dropdown_form.dart';
+import 'package:myoro_bet_tracker/widgets/inputs/input_form.dart';
 import 'package:myoro_bet_tracker/widgets/modals/basic_modal.dart';
 
-class AddBetModal extends StatelessWidget {
+class AddBetModal extends StatefulWidget {
   const AddBetModal({ super.key });
 
   @override
-  Widget build(BuildContext context) {
-    final List<String> titles = [
-      'Bet Name',
-      'Sport(?)',
-      '\$ Placed',
-      '\$ Gained/Lost'
-    ];
+  State<AddBetModal> createState() => _AddBetModalState();
+}
 
-    return BasicModal(
-      title: 'Add Bet',
-      width: 350,
-      body: Material( // For BasicInput & BasicDropdown to work
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              for(final String title in titles) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: title != '\$ Gained/Lost'
-                        ?
-                        Text(
-                          '$title:',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          textAlign: TextAlign.right
-                        )
-                        :
-                        const BasicDropdown(
-                          items: [ 'Gained', 'Lost' ]
-                        )
-                    ),
-                    const SizedBox(width: 10),
-                    if(title != 'Sport(?)')
-                      Expanded(child: BasicInput(hintText: title))
-                    else
-                      const Expanded(child: BasicDropdown(items: [
-                        'Soccer',
-                        'Basketball',
-                        'Hockey',
-                        'Not Sport'
-                      ]))
-                  ]
-                ),
-                const SizedBox(height: 10)
-              ],
-              Row(
-                children: [
-                  Expanded(
-                    child: IconAndTextHoverButton(
-                      onTap: () {}, // TODO
-                      icon: Icons.add,
-                      text: 'Add Bet'
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: IconAndTextHoverButton(
-                      onTap: () => Navigator.pop(context),
-                      icon: Icons.cancel,
-                      text: 'Cancel'
-                    ),
-                  )
-                ]
-              )
-            ]
-          ),
-        ),
-      )
-    );
+class _AddBetModalState extends State<AddBetModal> {
+  final TextEditingController betNameController = TextEditingController();
+  final TextEditingController placedController = TextEditingController();
+  final TextEditingController gainedController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    betNameController.dispose();
+    placedController.dispose();
+    gainedController.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) => const BasicModal(
+    title: 'Add Bet',
+    width: 350,
+    body: Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: [
+          InputForm(
+            title: 'Bet Name',
+            textExpanded: true,
+            textAlignment: TextAlign.right
+          ),
+          SizedBox(height: 5),
+          DropdownForm(
+            title: 'Sport(?)',
+            dropdownItems: [ 'mock', 'test' ],
+            textExpanded: true,
+            textAlignment: TextAlign.right
+          ),
+          SizedBox(height: 5),
+          InputForm(
+            title: '\$ Placed',
+            textExpanded: true,
+            textAlignment: TextAlign.right
+          ),
+          SizedBox(height: 5),
+          InputForm(
+            title: '\$ Gained/Lost',
+            textExpanded: true,
+            textAlignment: TextAlign.right
+          )
+        ]
+      ),
+    )
+  );
 }
