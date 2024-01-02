@@ -4,17 +4,21 @@ import 'package:myoro_bet_tracker/widgets/inputs/basic_dropdown.dart';
 class DropdownForm extends StatelessWidget {
   final String title;
   final List<String> dropdownItems;
+  final Function onChanged;
   final bool expanded;
   final bool textExpanded;
   final TextAlign textAlignment;
+  final bool dropdownExpanded;
 
   const DropdownForm({
     super.key,
     required this.title,
     required this.dropdownItems,
+    required this.onChanged,
     this.expanded = false,
     this.textExpanded = false,
-    this.textAlignment = TextAlign.center
+    this.textAlignment = TextAlign.center,
+    this.dropdownExpanded = true
   });
 
   @override
@@ -40,8 +44,12 @@ class DropdownForm extends StatelessWidget {
             textAlign: textAlignment
           ),
         ),
-      const SizedBox(width: 5),
-      BasicDropdown(items: dropdownItems)
+      const SizedBox(width: 10),
+      !dropdownExpanded
+        ?
+        BasicDropdown(items: dropdownItems, onChanged: onChanged)
+        :
+        Expanded(child: BasicDropdown(items: dropdownItems, onChanged: onChanged))
     ]
   );
 }

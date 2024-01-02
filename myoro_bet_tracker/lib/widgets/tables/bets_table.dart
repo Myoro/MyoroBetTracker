@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
+import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 
 class BetsTable extends StatelessWidget {
   const BetsTable({ super.key });
@@ -19,59 +20,78 @@ class BetsTable extends StatelessWidget {
       'Date Placed'
     ];
 
-    if(screenWidth < 700) {
+    if(screenWidth < 740) {
       titleRow.removeAt(titleRow.length - 1);
-      if(screenWidth < 580) {
+      if(screenWidth < 620) {
         titleRow.removeAt(titleRow.length - 1);
-        if(screenWidth < 280) {
+        if(screenWidth < 320) {
           titleRow.removeAt(titleRow.length - 1);
         }
       }
     }
 
     return BlocBuilder<BetsBloc, BetsState>(
-      builder: (context, state) => Table(
-        children: [
-          // Title
-          TableRow(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.onPrimary,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10)
-              ),
-              border: Border.all(
-                color: theme.colorScheme.onPrimary,
-                width: 2
-              )
-            ),
-            children: [
-              for(final String title in titleRow)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    title,
-                    style: theme.textTheme.titleMedium!.copyWith(
-                      color: theme.colorScheme.primary
-                    ),
-                    textAlign: TextAlign.center
-                  ),
-                )
-            ]
-          ),
-          // Bets
-          for(final BetModel bet in state.bets)
+      builder: (context, state) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: theme.colorScheme.onPrimary,
+            width: 2
+          )
+        ),
+        child: Table(
+          children: [
+            // Title
             TableRow(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.onPrimary,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(5),
+                  topRight: const Radius.circular(5),
+                  bottomLeft: Radius.circular(state.bets.isEmpty ? 5 : 0),
+                  bottomRight: Radius.circular(state.bets.isEmpty ? 5 : 0)
+                )
+              ),
               children: [
-                for(int i = 0; i < titleRow.length; i++)
-                  Text(
-                    bet.toList()[i] == null ? '' : (bet.toList()[i] is double ? '\$${bet.toList()[i].toString()}' : bet.toList()[i]),
-                    style: theme.textTheme.bodyMedium,
-                    textAlign: TextAlign.center
+                for(final String title in titleRow)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: ButtonWithoutFeedback(
+                      onTap: () => print('Start filter'), // TODO
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            title,
+                            style: theme.textTheme.titleMedium!.copyWith(
+                              color: theme.colorScheme.primary
+                            ),
+                            textAlign: TextAlign.center
+                          ),
+                          Icon(Icons.filter_alt, size: 20, color: theme.colorScheme.primary)
+                        ],
+                      )
+                    )
                   )
               ]
-            )
-        ]
+            ),
+            // Bets
+            for(final BetModel bet in state.bets)
+              TableRow(
+                children: [
+                  for(int i = 0; i < titleRow.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        bet.toList()[i] == null ? '' : (bet.toList()[i] is double ? '\$${bet.toList()[i].toString()}' : bet.toList()[i]),
+                        style: theme.textTheme.bodyMedium,
+                        textAlign: TextAlign.center
+                      ),
+                    )
+                ]
+              )
+          ]
+        ),
       ),
     );
   }

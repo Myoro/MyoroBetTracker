@@ -28,7 +28,11 @@ final ThemeData dark = ThemeData(
     bodyMedium: TextStyle(
       fontSize: 20,
       color:    Color(0xFFEDE6D6)
-    )
+    ),
+    bodySmall: TextStyle(
+      fontSize: 18,
+      color:    Color(0xFFEDE6D6)
+    ),
   ),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor:          const Color(0xFFEDE6D6),
@@ -64,6 +68,10 @@ final ThemeData light = ThemeData(
     ),
     bodyMedium: TextStyle(
       fontSize: 20,
+      color:    Color(0xFF181818)
+    ),
+    bodySmall: TextStyle(
+      fontSize: 18,
       color:    Color(0xFF181818)
     )
   ),

@@ -1,8 +1,10 @@
+import 'package:intl/intl.dart';
+
 class BetModel {
   final String? name;
   final String? sport;
   final double placed;
-  final double gainedOrLost;
+  final dynamic gainedOrLost;
   final DateTime? datePlaced;
 
   BetModel({
@@ -13,5 +15,19 @@ class BetModel {
     this.datePlaced
   });
 
-  List<dynamic> toList() => [ name, sport, placed, gainedOrLost, datePlaced ];
+  Map<String, dynamic> toJSON() => {
+    'name': name,
+    'sport': sport,
+    'placed': placed,
+    'gained_or_lost': gainedOrLost,
+    'date_placed': datePlaced != null ? DateFormat('dd-MM-yyyy').format(datePlaced!) : null
+  };
+
+  List<dynamic> toList() => [
+    name,
+    sport,
+    placed,
+    gainedOrLost,
+    datePlaced != null ? DateFormat('mm-MM-yyyy').format(datePlaced!) : ''
+  ];
 }
