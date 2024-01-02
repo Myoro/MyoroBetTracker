@@ -1,0 +1,9 @@
+0. Fix bets table media querys
+1. Implement available income
+2. Implement graph
+3. Implement deleting bets
+4. Implement setting bets AND available income on application start
+5. Testing
+- Widget testing
+- Unit testing
+- Integration testing

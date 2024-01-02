@@ -9,33 +9,45 @@ class AddBetEvent extends BetsEvent {
   final BetModel bet;
   AddBetEvent(this.bet);
 }
-class FilterBets extends BetsEvent {
+class FilterBetsEvent extends BetsEvent {
   final String column;
-  FilterBets(this.column);
+  FilterBetsEvent(this.column);
+}
+class AddAvailableIncomeEvent extends BetsEvent {
+  final double income;
+  AddAvailableIncomeEvent(this.income);
 }
 
 class BetsState {
   final List<BetModel> bets;
   final String tableCategory;
+  final double? availableIncome;
 
-  BetsState({ this.bets = const [], this.tableCategory = 'All' });
+  BetsState({
+    this.bets = const [],
+    this.tableCategory = 'All',
+    this.availableIncome
+  });
 
   BetsState copyWith({
     List<BetModel>? bets,
-    int? editing
+    String? tableCategory,
+    double? availableIncome
   }) => BetsState(
     bets: bets ?? this.bets,
+    tableCategory: tableCategory ?? this.tableCategory,
+    availableIncome: availableIncome ?? this.availableIncome
   );
 }
 
 class BetsBloc extends Bloc<BetsEvent, BetsState> {
-  BetsBloc() : super(BetsState()) {
+  BetsBloc(double availableIncome) : super(BetsState(availableIncome: availableIncome)) {
     on<AddBetEvent>((event, emit) {
       Database.insert('bets', event.bet.toJSON());
       emit(state.copyWith(bets: [ ...state.bets, event.bet ]));
     });
 
-    on<FilterBets>((event, emit) {
+    on<FilterBetsEvent>((event, emit) {
       final List<BetModel> newBets = [];
 
       switch(event.column) {
@@ -82,6 +94,11 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
           emit(state.copyWith(bets: state.bets));
           break;
       }
+    });
+
+    on<AddAvailableIncomeEvent>((event, emit) {
+      Database.update('available_income', { 'income': event.income.toStringAsFixed(2) });
+      emit(state.copyWith(availableIncome: event.income));
     });
   }
 }

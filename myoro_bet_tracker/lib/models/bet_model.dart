@@ -23,6 +23,13 @@ class BetModel {
     'date_placed': datePlaced != null ? DateFormat('dd-MM-yyyy').format(datePlaced!) : null
   };
 
+  BetModel.fromJSON(Map<String, dynamic> json)
+    : name = json['name'],
+      sport = json['sport'],
+      placed = json['placed'],
+      gainedOrLost = json['gained_or_lost'],
+      datePlaced = json['date_placed'];
+
   List<dynamic> toList() => [
     name,
     sport,

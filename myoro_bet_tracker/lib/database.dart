@@ -40,6 +40,15 @@ class Database {
         date_placed    TEXT
       );
     ''');
+
+    // Available income table
+    await _database.execute('''
+      CREATE TABLE IF NOT EXISTS available_income(
+        id INTEGER PRIMARY KEY,
+        income             TEXT
+      );
+    ''');
+    if((await get('available_income')).isEmpty) insert('available_income', { 'income': '0' });
   }
 
   static Future<void> reset() async {

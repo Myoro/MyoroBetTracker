@@ -16,7 +16,7 @@ final ThemeData dark = ThemeData(
   ),
   textTheme: const TextTheme(
     titleLarge: TextStyle(
-      fontSize:   30,
+      fontSize:   24,
       fontWeight: FontWeight.bold,
       color:     Color(0xFFEDE6D6)
     ),
@@ -57,7 +57,7 @@ final ThemeData light = ThemeData(
   ),
   textTheme: const TextTheme(
     titleLarge: TextStyle(
-      fontSize:   30,
+      fontSize:   24,
       fontWeight: FontWeight.bold,
       color:     Color(0xFF181818)
     ),

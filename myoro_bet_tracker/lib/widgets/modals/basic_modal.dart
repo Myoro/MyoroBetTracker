@@ -37,7 +37,7 @@ class BasicModal extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Row(
                   children: [
-                    Text(title, style: theme.textTheme.titleLarge),
+                    Text(title, style: theme.textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal)),
                     const Spacer(),
                     ButtonWithoutFeedback(
                       onTap: () => Navigator.pop(context),
@@ -50,6 +50,7 @@ class BasicModal extends StatelessWidget {
                   ]
                 ),
               ),
+              const SizedBox(height: 10),
               body
             ]
           ),

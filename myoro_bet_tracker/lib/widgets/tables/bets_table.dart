@@ -17,7 +17,8 @@ class BetsTable extends StatelessWidget {
       'Sport',
       '\$ Placed',
       '\$ Gained/Lost',
-      'Date Placed'
+      'Date Placed',
+      '' // Delete column
     ];
 
     if(screenWidth < 820) {
@@ -44,6 +45,7 @@ class BetsTable extends StatelessWidget {
               )
             ),
             child: Table(
+              columnWidths: { titleRow.length - 1: const FixedColumnWidth(50) },
               children: [
                 // Title
                 TableRow(
@@ -61,7 +63,7 @@ class BetsTable extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: ButtonWithoutFeedback(
-                          onTap: () => BlocProvider.of<BetsBloc>(context).add(FilterBets(title)),
+                          onTap: () => BlocProvider.of<BetsBloc>(context).add(FilterBetsEvent(title)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -72,7 +74,7 @@ class BetsTable extends StatelessWidget {
                                 ),
                                 textAlign: TextAlign.center
                               ),
-                              Icon(Icons.filter_alt, size: 20, color: theme.colorScheme.primary)
+                              if(titleRow.indexOf(title) != titleRow.length - 1) Icon(Icons.filter_alt, size: 20, color: theme.colorScheme.primary)
                             ],
                           )
                         )
@@ -86,11 +88,22 @@ class BetsTable extends StatelessWidget {
                       for(int i = 0; i < titleRow.length; i++)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            bet.toList()[i] == null ? '' : (bet.toList()[i] is double ? '\$${bet.toList()[i].toString()}' : bet.toList()[i]),
-                            style: theme.textTheme.bodyMedium,
-                            textAlign: TextAlign.center
-                          ),
+                          child: i != titleRow.length - 1
+                            ?
+                            Text(
+                              bet.toList()[i] == null ? '' : (bet.toList()[i] is double ? '\$${bet.toList()[i].toString()}' : bet.toList()[i]),
+                              style: theme.textTheme.bodyMedium,
+                              textAlign: TextAlign.center
+                            )
+                            :
+                            ButtonWithoutFeedback(
+                              onTap: () => print('Delete'),
+                              child: Icon(
+                                Icons.delete,
+                                size: 30,
+                                color: Theme.of(context).colorScheme.onPrimary
+                              )
+                            )
                         )
                     ]
                   )
