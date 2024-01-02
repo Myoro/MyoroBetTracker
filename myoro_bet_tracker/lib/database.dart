@@ -8,22 +8,22 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class Database {
-  static late final sqflite.Database _database;
+  static late sqflite.Database _database;
   static final Database _singletonInstance = Database._internal();
 
   factory Database() => _singletonInstance;
   Database._internal();
 
+  static Future<String> getDatabasePath() async => join(
+    (await getApplicationSupportDirectory()).path,
+    'myoro_bet_tracker.db'
+  );
+
   static Future<void> init() async {
     if(!Platform.isIOS && !Platform.isAndroid)
       sqflite.databaseFactory = databaseFactoryFfi;
 
-    _database = await sqflite.openDatabase(
-      join(
-        (await getApplicationSupportDirectory()).path,
-        'myoro_bet_tracker.db'
-      )
-    );
+    _database = await sqflite.openDatabase(await getDatabasePath());
 
     // Dark mode table
     await _database.execute('CREATE TABLE IF NOT EXISTS dark_mode(id INTEGER PRIMARY KEY, enabled INTEGER);');
@@ -40,6 +40,12 @@ class Database {
         date_placed    TEXT
       );
     ''');
+  }
+
+  static Future<void> reset() async {
+    await sqflite.deleteDatabase(await getDatabasePath());
+    await _database.close();
+    await init();
   }
 
   static Future<List<Map<String, Object?>>> select(String table) async => await _database.query(table);

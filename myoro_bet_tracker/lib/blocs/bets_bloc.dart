@@ -16,8 +16,9 @@ class FilterBets extends BetsEvent {
 
 class BetsState {
   final List<BetModel> bets;
+  final String tableCategory;
 
-  BetsState({ this.bets = const [] });
+  BetsState({ this.bets = const [], this.tableCategory = 'All' });
 
   BetsState copyWith({
     List<BetModel>? bets,

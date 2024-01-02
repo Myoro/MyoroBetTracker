@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc.dart';
@@ -20,6 +21,7 @@ void main() async {
   }
 
   await Database.init();
+  if(kDebugMode) await Database.reset(); // Resets everything to assert that tables are made correctly
   final bool isDarkMode = (await Database.get('dark_mode'))['enabled'] == 1 ? true : false;
 
   runApp(
