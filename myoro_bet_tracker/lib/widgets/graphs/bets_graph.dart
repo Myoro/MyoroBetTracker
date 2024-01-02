@@ -11,11 +11,10 @@ class BetsGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<BetsBloc, BetsState>(
     builder: (context, state) {
-      print(state.tableCategory);
       final List<FlSpot> coords = [];
       for(final BetModel bet in state.bets) {
         coords.add(FlSpot(
-          bet.gainedOrLost == 'Lost' ? 0 : bet.gainedOrLost,
+          bet.gainedOrLost == 'Lost' ? -bet.placed : bet.gainedOrLost,
           double.parse(state.bets.indexOf(bet).toString())
         ));
       }
