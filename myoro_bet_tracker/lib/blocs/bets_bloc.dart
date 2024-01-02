@@ -17,6 +17,10 @@ class AddAvailableIncomeEvent extends BetsEvent {
   final double income;
   AddAvailableIncomeEvent(this.income);
 }
+class DeleteBetEvent extends BetsEvent {
+  final BetModel bet;
+  DeleteBetEvent(this.bet);
+}
 
 class BetsState {
   final List<BetModel> bets;
@@ -99,6 +103,15 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
     on<AddAvailableIncomeEvent>((event, emit) {
       Database.update('available_income', { 'income': event.income.toStringAsFixed(2) });
       emit(state.copyWith(availableIncome: event.income));
+    });
+
+    on<DeleteBetEvent>((event, emit) {
+      Database.delete(
+        'bets',
+        where: 'name = ? AND sport = ? AND placed = ? AND gained_or_lost = ? AND date_placed = ?',
+        whereArgs: event.bet.toList()
+      );
+      emit(state.copyWith(bets: state.bets..remove(event.bet)));
     });
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
+import 'package:myoro_bet_tracker/widgets/modals/confirmation_modal.dart';
 
 class BetsTable extends StatelessWidget {
   const BetsTable({ super.key });
@@ -21,12 +22,12 @@ class BetsTable extends StatelessWidget {
       '' // Delete column
     ];
 
-    if(screenWidth < 820) {
-      titleRow.removeAt(titleRow.length - 1);
+    if(screenWidth < 860) {
+      titleRow.removeAt(titleRow.length - 2);
       if(screenWidth < 700) {
-        titleRow.removeAt(titleRow.length - 1);
+        titleRow.removeAt(titleRow.length - 2);
         if(screenWidth < 400) {
-          titleRow.removeAt(titleRow.length - 1);
+          titleRow.removeAt(titleRow.length - 2);
         }
       }
     }
@@ -88,7 +89,7 @@ class BetsTable extends StatelessWidget {
                       for(int i = 0; i < titleRow.length; i++)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: i != titleRow.length - 1
+                          child: titleRow[i].isNotEmpty
                             ?
                             Text(
                               bet.toList()[i] == null ? '' : (bet.toList()[i] is double ? '\$${bet.toList()[i].toString()}' : bet.toList()[i]),
@@ -97,7 +98,10 @@ class BetsTable extends StatelessWidget {
                             )
                             :
                             ButtonWithoutFeedback(
-                              onTap: () => print('Delete'),
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (context) => ConfirmationModal(bet: bet)
+                              ),
                               child: Icon(
                                 Icons.delete,
                                 size: 30,
@@ -111,7 +115,7 @@ class BetsTable extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      )
     );
   }
 }

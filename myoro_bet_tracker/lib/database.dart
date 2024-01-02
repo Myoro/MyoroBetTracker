@@ -67,4 +67,12 @@ class Database {
   static Future<void> insert(String table, Map<String, Object?> data) async => await _database.insert(table, data);
 
   static Future<void> update(String table, Map<String, Object?> values) async => await _database.update(table, values);
+
+  static Future<void> delete(
+    String table,
+    {
+      required String where,
+      required List<Object?> whereArgs
+    }
+  ) async => await _database.delete(table, where: where, whereArgs: whereArgs);
 }

@@ -26,9 +26,9 @@ class BetModel {
   BetModel.fromJSON(Map<String, dynamic> json)
     : name = json['name'],
       sport = json['sport'],
-      placed = json['placed'],
-      gainedOrLost = json['gained_or_lost'],
-      datePlaced = json['date_placed'];
+      placed = double.parse(json['placed']),
+      gainedOrLost = json['gained_or_lost'] is String ? json['gained_or_lost'] : double.parse(json['gained_or_lost']),
+      datePlaced = DateFormat('dd-MM-yyyy').parse(json['date_placed']);
 
   List<dynamic> toList() => [
     name,

@@ -28,10 +28,10 @@ class MainScreen extends StatelessWidget {
                 children: [
                   if(state.bets.isNotEmpty) ...[
                     const BetsGraph(),
-                    const SizedBox(height: 50)
+                    const SizedBox(height: 50),
+                    const BetsTable(),
+                    const SizedBox(height: 50),
                   ],
-                  const BetsTable(),
-                  const SizedBox(height: 50),
                   IconAndTextHoverButton(
                     onTap: () => showDialog(
                       context: context,
