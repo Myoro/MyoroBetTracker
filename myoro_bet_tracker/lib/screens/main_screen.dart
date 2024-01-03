@@ -29,6 +29,7 @@ class MainScreen extends StatelessWidget {
                 children: [
                   if(state.bets.isNotEmpty) ...[
                     const BetSummary(),
+                    const SizedBox(height: 50),
                     const BetsGraph(),
                     const SizedBox(height: 50),
                     const BetsTable(),

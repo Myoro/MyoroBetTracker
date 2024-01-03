@@ -21,8 +21,8 @@ class _BetsGraphState extends State<BetsGraph> {
 
   @override
   void initState() {
-    super.initState();
     Database.get('show').then((row) => _showChart.value = row['show_performance_chart'] == 1 ? true : false);
+    super.initState();
   }
 
   @override

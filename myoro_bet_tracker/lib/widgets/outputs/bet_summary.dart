@@ -63,7 +63,12 @@ class _BetSummaryState extends State<BetSummary> {
     children: [
       Text('$title:', style: Theme.of(context).textTheme.titleSmall),
       const SizedBox(width: 5),
-      Flexible(child: Text('\$${data.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodySmall))
+      Flexible(
+        child: Text(
+          '${data.isNegative ? '-' : ''}\$${data.abs().toStringAsFixed(2)}',
+          style: Theme.of(context).textTheme.bodySmall
+        )
+      )
     ]
   );
 }

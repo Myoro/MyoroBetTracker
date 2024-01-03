@@ -21,16 +21,17 @@ class _HeaderWithCheckboxState extends State<HeaderWithCheckbox> {
   Widget build(BuildContext context) => ValueListenableBuilder(
     valueListenable: _checked,
     builder: (context, checked, child) => Padding(
-      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if(MediaQuery.of(context).size.width > 500) ...[
+          if(MediaQuery.of(context).size.width > 600) ...[
             Text(
               widget.title,
               style: Theme.of(context).textTheme.titleLarge
             ),
-            const Spacer()
+            SizedBox(width: MediaQuery.of(context).size.width - 550)
           ],
           Text(
             'Show ${widget.title}',
