@@ -1,13 +1,1 @@
-4. widgets/graphs/bets_graph.dart
-5. widgets/headers/header_with_checkbox.dart
-6. widgets/inputs/basic_dropdown.dart
-7. widgets/inputs/basic_input.dart
-8. widgets/inputs/dropdown_form.dart
-9. widgets/inputs/input_form.dart
-10. widgets/modals/add_bet_modal.dart
-11. widgets/modals/available_income_modal.dart
-12. widgets/modals/basic_modal.dart
-13. widgets/modals/confirmation_modal.dart
-14. widgets/outputs/bet_summary.dart
-15. widgets/tables/bets_table.dart
 16. widgets/top_bars/main_screen_top_bar.dart

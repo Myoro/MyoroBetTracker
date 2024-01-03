@@ -7,11 +7,13 @@ import 'package:myoro_bet_tracker/themes.dart';
 class BaseTestWidget extends StatelessWidget {
   final String title;
   final bool screenTest;
+  final bool topBarTest;
   final Widget child;
 
   const BaseTestWidget({
     super.key,
     required this.title,
+    this.topBarTest = false,
     this.screenTest = false,
     required this.child
   });
@@ -26,7 +28,9 @@ class BaseTestWidget extends StatelessWidget {
       builder: (context, isDarkMode) => MaterialApp(
         title: title,
         theme: isDarkMode ? dark : light,
-        home: screenTest ? child : Scaffold(body: child)
+        home: screenTest ? child : Scaffold(
+          body: child // edit this to accept top bars
+        )
       ),
     ),
   );

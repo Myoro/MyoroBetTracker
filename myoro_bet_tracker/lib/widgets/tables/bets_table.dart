@@ -90,8 +90,9 @@ class _BetsTableState extends State<BetsTable> {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: ButtonWithoutFeedback(
                               onTap: () => BlocProvider.of<BetsBloc>(context).add(FilterBetsEvent(title)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
                                   Text(
                                     title,

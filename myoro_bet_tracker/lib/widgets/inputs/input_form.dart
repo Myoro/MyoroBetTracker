@@ -71,7 +71,7 @@ class InputForm extends StatelessWidget {
         ?
         (value) => dropdownOnChanged!(value)
         :
-        (value) => print('Missing implementation')
+        (value) => debugPrint('Missing implementation')
     );
 
   Widget _input(BuildContext context) => showInput
