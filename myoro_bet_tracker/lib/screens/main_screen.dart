@@ -5,6 +5,7 @@ import 'package:myoro_bet_tracker/widgets/graphs/bets_graph.dart';
 import 'package:myoro_bet_tracker/widgets/modals/add_bet_modal.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/icon_and_text_hover_button.dart';
 import 'package:myoro_bet_tracker/widgets/modals/available_income_modal.dart';
+import 'package:myoro_bet_tracker/widgets/outputs/bet_summary.dart';
 import 'package:myoro_bet_tracker/widgets/tables/bets_table.dart';
 import 'package:myoro_bet_tracker/widgets/top_bars/main_screen_top_bar.dart';
 
@@ -27,6 +28,7 @@ class MainScreen extends StatelessWidget {
               child: Column(
                 children: [
                   if(state.bets.isNotEmpty) ...[
+                    const BetSummary(),
                     const BetsGraph(),
                     const SizedBox(height: 50),
                     const BetsTable(),

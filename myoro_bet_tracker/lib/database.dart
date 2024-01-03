@@ -49,6 +49,17 @@ class Database {
       );
     ''');
     if((await get('available_income')).isEmpty) insert('available_income', { 'income': '0' });
+
+    // Widgets to display on startup
+    await _database.execute('''
+      CREATE TABLE IF NOT EXISTS show(
+        id                     INTEGER PRIMARY KEY,
+        show_performance_chart INTEGER,
+        show_bets_table        INTEGER,
+        show_bet_summary       INTEGER
+      );
+    ''');
+    if((await get('show')).isEmpty) insert('show', { 'show_performance_chart': 1, 'show_bets_table': 1, 'show_bet_summary': 1 });
   }
 
   static Future<void> reset() async {

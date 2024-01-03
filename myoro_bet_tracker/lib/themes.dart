@@ -25,6 +25,11 @@ final ThemeData dark = ThemeData(
       fontWeight: FontWeight.bold,
       color:     Color(0xFFEDE6D6)
     ),
+    titleSmall: TextStyle(
+      fontSize:   18,
+      fontWeight: FontWeight.bold,
+      color:     Color(0xFFEDE6D6)
+    ),
     bodyMedium: TextStyle(
       fontSize: 20,
       color:    Color(0xFFEDE6D6)
@@ -63,6 +68,11 @@ final ThemeData light = ThemeData(
     ),
     titleMedium: TextStyle(
       fontSize:   20,
+      fontWeight: FontWeight.bold,
+      color:     Color(0xFF181818)
+    ),
+    titleSmall: TextStyle(
+      fontSize:   18,
       fontWeight: FontWeight.bold,
       color:     Color(0xFF181818)
     ),
