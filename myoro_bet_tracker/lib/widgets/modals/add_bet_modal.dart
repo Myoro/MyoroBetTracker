@@ -128,7 +128,7 @@ class _AddBetModalState extends State<AddBetModal> {
               Row(
                 children: [
                   IconAndTextHoverButton(
-                    onTap: () => addBet(context), // TODO
+                    onTap: () => addBet(context),
                     icon: Icons.add,
                     text: 'Add Bet',
                     expanded: true

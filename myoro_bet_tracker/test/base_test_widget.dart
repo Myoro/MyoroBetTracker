@@ -28,9 +28,14 @@ class BaseTestWidget extends StatelessWidget {
       builder: (context, isDarkMode) => MaterialApp(
         title: title,
         theme: isDarkMode ? dark : light,
-        home: screenTest ? child : Scaffold(
-          body: child // edit this to accept top bars
-        )
+        home: screenTest
+          ?
+          child
+          :
+          Scaffold(
+            appBar: topBarTest ? child as PreferredSizeWidget? : null,
+            body: !topBarTest ? child : null
+          )
       ),
     ),
   );

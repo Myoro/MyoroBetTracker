@@ -16,6 +16,7 @@ void main() {
         )
       )
     );
+    await tester.pumpAndSettle();
 
     expect(find.byType(IconAndTextHoverButton), findsOneWidget);
     expect(find.byType(Icon), findsOneWidget);

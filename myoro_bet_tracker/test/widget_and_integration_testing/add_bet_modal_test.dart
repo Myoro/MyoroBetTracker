@@ -37,7 +37,7 @@ void main() {
     expect(find.text('\$ Placed'), findsOneWidget);
     expect(find.text('Lost*'), findsOneWidget);
     expect(find.text('Bet Lost'), findsOneWidget);
-    expect(find.byType(IconAndTextHoverButton), findsNWidgets(3));
+    expect(find.byType(IconAndTextHoverButton), findsNWidgets(2));
 
     await tester.tap(
       find.byWidgetPredicate(
