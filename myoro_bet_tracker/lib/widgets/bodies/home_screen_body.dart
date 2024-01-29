@@ -7,6 +7,10 @@ class HomeScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Padding(
         padding: EdgeInsets.all(20),
-        child: BetsTable(),
+        child: OverflowBox(
+          alignment: Alignment.topCenter,
+          minWidth: 1000,
+          child: BetsTable(),
+        ),
       );
 }

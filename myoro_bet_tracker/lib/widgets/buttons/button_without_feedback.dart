@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Basic button without feedback
-class ButtonWithoutFeedback extends StatelessWidget {
+class ButtonWithoutFeedback extends StatefulWidget {
   /// Function called by onTap
   final Function onTap;
 
@@ -15,11 +16,29 @@ class ButtonWithoutFeedback extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () => onTap(),
-          child: child,
+  State<ButtonWithoutFeedback> createState() => _ButtonWithoutFeedbackState();
+}
+
+class _ButtonWithoutFeedbackState extends State<ButtonWithoutFeedback> {
+  final ValueNotifier<SystemMouseCursor> _cursor = ValueNotifier<SystemMouseCursor>(SystemMouseCursors.basic);
+
+  @override
+  void dispose() {
+    _cursor.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ValueListenableBuilder(
+        valueListenable: _cursor,
+        builder: (context, cursor, child) => MouseRegion(
+          cursor: cursor,
+          onEnter: (_) => _cursor.value = SystemMouseCursors.click,
+          onExit: (_) => _cursor.value = SystemMouseCursors.basic,
+          child: GestureDetector(
+            onTap: () => widget.onTap(),
+            child: widget.child,
+          ),
         ),
       );
 }

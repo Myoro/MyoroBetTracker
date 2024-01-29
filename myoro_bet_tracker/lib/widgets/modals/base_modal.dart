@@ -8,6 +8,7 @@ class BaseModal {
   static void show(
     BuildContext context, {
     String? title,
+    required Size size,
     required Widget content,
   }) =>
       showDialog(
@@ -18,8 +19,8 @@ class BaseModal {
 
             return Center(
               child: Container(
-                width: 300,
-                height: 300,
+                width: size.width,
+                height: size.height,
                 decoration: BoxDecoration(
                   color: theme.colorScheme.primary,
                   borderRadius: BorderRadius.circular(10),

@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
 import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
+import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/icon_hover_button.dart';
 
 /// Displays bet history of the user
@@ -26,10 +28,6 @@ class BetsTable extends StatelessWidget {
             ));
 
     final ThemeData theme = Theme.of(context);
-    final TextStyle title = theme.textTheme.titleMedium!.copyWith(
-      color: theme.colorScheme.primary,
-    );
-    final TextStyle row = theme.textTheme.bodyMedium!;
 
     return Table(
       columnWidths: const {
@@ -37,75 +35,100 @@ class BetsTable extends StatelessWidget {
         6: FixedColumnWidth(32),
       },
       children: [
-        for (final BetModel bet in bets)
-          if (bets.indexOf(bet) == 0)
-            TableRow(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.onPrimary,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
-              children: [
-                _Text(text: bet.name ?? '', textStyle: title, onTap: () {}), // TODO: onTap
-                _Text(text: bet.sport ?? '', textStyle: title, onTap: () {}), // TODO: onTap
-                _Text(text: bet.placed.toStringAsFixed(2), textStyle: title, onTap: () {}), // TODO: onTap
-                _Text(text: bet.gainedOrLost.toStringAsFixed(2), textStyle: title, onTap: () {}), // TODO: onTap
-                _Text(text: bet.datePlaced, textStyle: title, onTap: () {}),
-                const SizedBox(),
-                const SizedBox(),
-              ],
-            )
-          else
-            TableRow(
-              children: [
-                _Text(text: bet.name ?? '', textStyle: row),
-                _Text(text: bet.sport ?? '', textStyle: row),
-                _Text(text: bet.placed.toStringAsFixed(2), textStyle: row),
-                _Text(text: bet.gainedOrLost.toStringAsFixed(2), textStyle: row),
-                _Text(text: bet.datePlaced, textStyle: row),
-                _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
-                _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
-              ],
+        TableRow(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.onPrimary,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
             ),
+          ),
+          children: const [
+            _TitleCell(text: 'Bet Name'),
+            _TitleCell(text: 'Sport/Casino'),
+            _TitleCell(text: '\$ Placed'),
+            _TitleCell(text: '\$ Gained or Lost'),
+            _TitleCell(text: 'Date Placed'),
+            SizedBox(),
+            SizedBox(),
+          ],
+        ),
+        for (final BetModel bet in bets)
+          TableRow(
+            children: [
+              _NormalCell(text: bet.name ?? ''),
+              _NormalCell(text: bet.sport ?? ''),
+              _NormalCell(text: bet.placed.toStringAsFixed(2)),
+              _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
+              _NormalCell(text: bet.datePlaced),
+              _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
+              _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
+            ],
+          ),
       ],
     );
   }
 }
 
-class _Text extends StatelessWidget {
-  /// Used as the onTap to trigger a filter
-  final Function? onTap;
-
-  /// Text to be displayed
+class _TitleCell extends StatefulWidget {
   final String text;
 
-  /// Style of the text being displayed
-  final TextStyle textStyle;
-
-  const _Text({
-    this.onTap,
-    required this.text,
-    required this.textStyle,
-  });
+  const _TitleCell({required this.text});
 
   @override
-  Widget build(BuildContext context) => MouseRegion(
-        cursor: onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
-        child: GestureDetector(
-          onTap: onTap != null ? () => onTap : () {}, // TODO: Implement filters
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-            child: Text(
-              text,
-              style: textStyle,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+  State<_TitleCell> createState() => _TitleCellState();
+}
+
+class _TitleCellState extends State<_TitleCell> {
+  final ValueNotifier<SystemMouseCursor> _cursor = ValueNotifier<SystemMouseCursor>(SystemMouseCursors.basic);
+
+  @override
+  void dispose() {
+    _cursor.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return ButtonWithoutFeedback(
+      onTap: () {}, // TODO: Filter
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              widget.text,
+              style: theme.textTheme.titleMedium!.copyWith(
+                color: theme.colorScheme.primary,
+              ),
             ),
-          ),
+            const SizedBox(width: 5),
+            Icon(
+              Icons.filter_alt,
+              size: 20,
+              color: theme.colorScheme.primary,
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _NormalCell extends StatelessWidget {
+  final String text;
+
+  const _NormalCell({required this.text});
+
+  @override
+  Widget build(BuildContext context) => Text(
+        text,
+        style: Theme.of(context).textTheme.bodyMedium,
+        textAlign: TextAlign.center,
       );
 }
 
