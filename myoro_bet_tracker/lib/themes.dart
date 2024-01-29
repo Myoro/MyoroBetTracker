@@ -33,4 +33,9 @@ ThemeData createTheme(bool isDarkMode) => ThemeData(
         bodyMedium: _textStyle(fontSize: 20),
         bodySmall: _textStyle(fontSize: 16),
       ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: isDarkMode ? const Color(0xFFEDE6D6) : const Color(0xFF181818),
+        selectionColor: isDarkMode ? const Color(0xFFEDE6D6).withOpacity(0.3) : const Color(0xFF181818).withOpacity(0.3),
+        selectionHandleColor: isDarkMode ? const Color(0xFFEDE6D6).withOpacity(0.3) : const Color(0xFF181818).withOpacity(0.3),
+      ),
     );

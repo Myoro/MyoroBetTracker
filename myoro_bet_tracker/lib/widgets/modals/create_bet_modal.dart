@@ -12,7 +12,7 @@ class CreateBetModal {
   static void show(BuildContext context) => BaseModal.show(
         context,
         title: 'Create Bet',
-        size: const Size(300, 300),
+        size: const Size(350, 300),
         content: const Column(
           children: [
             BasicTextFieldForm(title: 'Bet Name'),

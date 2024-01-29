@@ -56,7 +56,8 @@ class BaseModal {
                           ),
                         ],
                       ),
-                      content
+                      /// [Material] allows all custom widgets to function within a modal
+                      Material(child: content),
                     ],
                   ),
                 ),
