@@ -6,6 +6,7 @@ TextStyle _textStyle({
 }) =>
     TextStyle(
       fontSize: fontSize,
+      fontWeight: fontWeight,
     );
 
 ThemeData createTheme(bool isDarkMode) => ThemeData(
