@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_state.dart';
+import 'package:myoro_bet_tracker/enums/bets_table_column_enums.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
 import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
@@ -11,63 +12,108 @@ import 'package:myoro_bet_tracker/widgets/buttons/icon_hover_button.dart';
 /// Displays bet history of the user
 ///
 /// Used in [HomeScreenBody]
-class BetsTable extends StatelessWidget {
+class BetsTable extends StatefulWidget {
   const BetsTable({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+  State<BetsTable> createState() => _BetsTableState();
+}
 
-    return BlocBuilder<BetsBloc, BetsState>(
-      builder: (context, state) => Table(
-        columnWidths: const {
-          5: FixedColumnWidth(32),
-          6: FixedColumnWidth(32),
-        },
-        children: [
-          TableRow(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.onPrimary,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-            ),
-            children: const [
-              _TitleCell(text: 'Bet Name'),
-              _TitleCell(text: 'Sport/Casino'),
-              _TitleCell(text: '\$ Placed'),
-              _TitleCell(text: '\$ Gained or Lost'),
-              _TitleCell(text: 'Date Placed', padding: EdgeInsets.only(top: 5, bottom: 5, left: 25, right: 5)),
-              SizedBox(),
-              SizedBox(),
-            ],
-          ),
-          for (final BetModel bet in state.bets)
-            TableRow(
-              children: [
-                _NormalCell(text: bet.name ?? 'N/A'),
-                _NormalCell(text: bet.sport ?? 'N/A'),
-                _NormalCell(text: bet.placed.toStringAsFixed(2)),
-                _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
-                _NormalCell(text: bet.datePlaced),
-                _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
-                _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
-              ],
-            ),
-        ],
-      ),
-    );
+class _BetsTableState extends State<BetsTable> {
+  late final ValueNotifier<String> _filter;
+
+  @override
+  void initState() {
+    super.initState();
+    _filter = ValueNotifier<String>(BetsTableColumnsEnum.betName.column);
   }
+
+  @override
+  void dispose() {
+    _filter.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<BetsBloc, BetsState>(
+        builder: (context, state) => ValueListenableBuilder(
+            valueListenable: _filter,
+            builder: (context, filter, child) {
+              final List<BetModel> bets = state.bets;
+              bets.sort((a, b) {
+                if (a.toJSON()[filter] != null) {
+                  if (b.toJSON()[filter] != null) {
+                    return a.toJSON()[filter]!.compareTo(b.toJSON()[filter]!);
+                  } else {
+                    return bets.indexOf(a);
+                  }
+                } else {
+                  return bets.indexOf(a);
+                }
+              });
+
+              List<Widget> titleCells = BetsTableColumnsEnum.values
+                  .map((value) => _TitleCell(
+                        text: value.column,
+                        filter: _filter,
+                        padding: value.column == 'Date Placed'
+                            ? const EdgeInsets.only(
+                                top: 5,
+                                bottom: 5,
+                                left: 25,
+                                right: 5,
+                              )
+                            : const EdgeInsets.all(5),
+                      ))
+                  .toList();
+
+              return Table(
+                columnWidths: const {
+                  5: FixedColumnWidth(32),
+                  6: FixedColumnWidth(32),
+                },
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                    children: [
+                      for (final Widget titleCell in titleCells) titleCell,
+                      const SizedBox(),
+                      const SizedBox(),
+                    ],
+                  ),
+                  for (final BetModel bet in bets)
+                    TableRow(
+                      children: [
+                        _NormalCell(text: bet.name ?? 'N/A'),
+                        _NormalCell(text: bet.sport ?? 'N/A'),
+                        _NormalCell(text: bet.placed.toStringAsFixed(2)),
+                        _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
+                        _NormalCell(text: bet.datePlaced),
+                        _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
+                        _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
+                      ],
+                    ),
+                ],
+              );
+            }),
+      );
 }
 
 class _TitleCell extends StatefulWidget {
   final String text;
   final EdgeInsets padding;
+  final ValueNotifier<String> filter;
 
   const _TitleCell({
     required this.text,
     this.padding = const EdgeInsets.all(5),
+    required this.filter,
   });
 
   @override
@@ -88,7 +134,7 @@ class _TitleCellState extends State<_TitleCell> {
     final ThemeData theme = Theme.of(context);
 
     return ButtonWithoutFeedback(
-      onTap: () {}, // TODO: Filter
+      onTap: () => widget.filter.value = BetsTableColumnsEnum.values.firstWhere((value) => value.column == widget.text).column,
       child: Padding(
         padding: widget.padding,
         child: Wrap(
