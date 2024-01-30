@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 TextStyle _textStyle({
   required double fontSize,
   FontWeight fontWeight = FontWeight.normal,
+  FontStyle fontStyle = FontStyle.normal,
 }) =>
     TextStyle(
       fontSize: fontSize,
       fontWeight: fontWeight,
+      fontStyle: fontStyle,
     );
 
 ThemeData createTheme(bool isDarkMode) => ThemeData(
@@ -26,12 +28,18 @@ ThemeData createTheme(bool isDarkMode) => ThemeData(
         onSurface: isDarkMode ? const Color(0xFFEDE6D6) : const Color(0xFF181818),
       ),
       textTheme: TextTheme(
-        titleLarge: _textStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        titleMedium: _textStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        titleSmall: _textStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        // Normal styles
         bodyLarge: _textStyle(fontSize: 24),
         bodyMedium: _textStyle(fontSize: 20),
         bodySmall: _textStyle(fontSize: 16),
+        // Bolded styles
+        titleLarge: _textStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        titleMedium: _textStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        titleSmall: _textStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        // Italicized styles
+        headlineLarge: _textStyle(fontSize: 24, fontStyle: FontStyle.italic),
+        headlineMedium: _textStyle(fontSize: 20, fontStyle: FontStyle.italic),
+        headlineSmall: _textStyle(fontSize: 16, fontStyle: FontStyle.italic),
       ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: isDarkMode ? const Color(0xFFEDE6D6) : const Color(0xFF181818),

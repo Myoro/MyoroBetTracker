@@ -1,8 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
+import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_state.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
 import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
@@ -16,64 +16,59 @@ class BetsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Remove this mock when finished
-    final List<BetModel> bets = List.generate(
-        5,
-        (index) => BetModel(
-              name: '$index Bet',
-              sport: ['Soccer', 'Basketball', 'Hockey', 'Casino'][Random().nextInt(4)],
-              placed: Random().nextDouble() * 2000,
-              gainedOrLost: Random().nextDouble() * 2000,
-              datePlaced: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-            ));
-
     final ThemeData theme = Theme.of(context);
 
-    return Table(
-      columnWidths: const {
-        5: FixedColumnWidth(32),
-        6: FixedColumnWidth(32),
-      },
-      children: [
-        TableRow(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.onPrimary,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-          ),
-          children: const [
-            _TitleCell(text: 'Bet Name'),
-            _TitleCell(text: 'Sport/Casino'),
-            _TitleCell(text: '\$ Placed'),
-            _TitleCell(text: '\$ Gained or Lost'),
-            _TitleCell(text: 'Date Placed'),
-            SizedBox(),
-            SizedBox(),
-          ],
-        ),
-        for (final BetModel bet in bets)
+    return BlocBuilder<BetsBloc, BetsState>(
+      builder: (context, state) => Table(
+        columnWidths: const {
+          5: FixedColumnWidth(32),
+          6: FixedColumnWidth(32),
+        },
+        children: [
           TableRow(
-            children: [
-              _NormalCell(text: bet.name ?? ''),
-              _NormalCell(text: bet.sport ?? ''),
-              _NormalCell(text: bet.placed.toStringAsFixed(2)),
-              _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
-              _NormalCell(text: bet.datePlaced),
-              _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
-              _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onPrimary,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            children: const [
+              _TitleCell(text: 'Bet Name'),
+              _TitleCell(text: 'Sport/Casino'),
+              _TitleCell(text: '\$ Placed'),
+              _TitleCell(text: '\$ Gained or Lost'),
+              _TitleCell(text: 'Date Placed', padding: EdgeInsets.only(top: 5, bottom: 5, left: 25, right: 5)),
+              SizedBox(),
+              SizedBox(),
             ],
           ),
-      ],
+          for (final BetModel bet in state.bets)
+            TableRow(
+              children: [
+                _NormalCell(text: bet.name ?? 'N/A'),
+                _NormalCell(text: bet.sport ?? 'N/A'),
+                _NormalCell(text: bet.placed.toStringAsFixed(2)),
+                _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
+                _NormalCell(text: bet.datePlaced),
+                _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
+                _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
+              ],
+            ),
+        ],
+      ),
     );
   }
 }
 
 class _TitleCell extends StatefulWidget {
   final String text;
+  final EdgeInsets padding;
 
-  const _TitleCell({required this.text});
+  const _TitleCell({
+    required this.text,
+    this.padding = const EdgeInsets.all(5),
+  });
 
   @override
   State<_TitleCell> createState() => _TitleCellState();
@@ -95,7 +90,7 @@ class _TitleCellState extends State<_TitleCell> {
     return ButtonWithoutFeedback(
       onTap: () {}, // TODO: Filter
       child: Padding(
-        padding: const EdgeInsets.all(5),
+        padding: widget.padding,
         child: Wrap(
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
