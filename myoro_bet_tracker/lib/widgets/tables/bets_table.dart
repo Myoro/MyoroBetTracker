@@ -6,7 +6,7 @@ import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_state.dart';
 import 'package:myoro_bet_tracker/enums/bets_table_column_enums.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
-import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
+import 'package:myoro_bet_tracker/widgets/cards/bets_table_card.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/icon_hover_button.dart';
 import 'package:myoro_bet_tracker/widgets/modals/bet_form_modal.dart';
@@ -14,7 +14,7 @@ import 'package:myoro_bet_tracker/widgets/modals/confirmation_modal.dart';
 
 /// Displays bet history of the user
 ///
-/// Used in [HomeScreenBody]
+/// Used in [BetsTableCard]
 class BetsTable extends StatefulWidget {
   const BetsTable({super.key});
 
@@ -75,51 +75,53 @@ class _BetsTableState extends State<BetsTable> {
                       ))
                   .toList();
 
-              return Table(
-                columnWidths: const {
-                  5: FixedColumnWidth(32),
-                  6: FixedColumnWidth(32),
-                },
-                children: [
-                  TableRow(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                    ),
-                    children: [
-                      for (final Widget titleCell in titleCells) titleCell,
-                      const SizedBox(),
-                      const SizedBox(),
-                    ],
-                  ),
-                  for (final BetModel bet in bets)
+                return Table(
+                  columnWidths: const {
+                    5: FixedColumnWidth(32),
+                    6: FixedColumnWidth(32),
+                  },
+                  children: [
                     TableRow(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(10),
+                          topRight: const Radius.circular(10),
+                          bottomLeft: bets.isEmpty ? const Radius.circular(10) : Radius.zero,
+                          bottomRight: bets.isEmpty ? const Radius.circular(10) : Radius.zero,
+                        ),
+                      ),
                       children: [
-                        _NormalCell(text: bet.name ?? 'N/A'),
-                        _NormalCell(text: bet.sport ?? 'N/A'),
-                        _NormalCell(text: bet.placed.toStringAsFixed(2)),
-                        _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
-                        _NormalCell(text: bet.datePlaced),
-                        _Button(
-                          icon: Icons.edit,
-                          onTap: () => BetFormModal.show(context, bet: bet),
-                        ),
-                        _Button(
-                          icon: Icons.delete,
-                          onTap: () => ConfirmationModal.show(
-                            context,
-                            title: 'Delete Bet',
-                            message: 'Are you sure you want to permanently delete this bet?',
-                            yesOnTap: () => deleteBet(bet),
-                          ),
-                        ),
+                        for (final Widget titleCell in titleCells) titleCell,
+                        const SizedBox(),
+                        const SizedBox(),
                       ],
                     ),
-                ],
-              );
+                    for (final BetModel bet in bets)
+                      TableRow(
+                        children: [
+                          _NormalCell(text: bet.name ?? 'N/A'),
+                          _NormalCell(text: bet.sport ?? 'N/A'),
+                          _NormalCell(text: bet.placed.toStringAsFixed(2)),
+                          _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
+                          _NormalCell(text: bet.datePlaced),
+                          _Button(
+                            icon: Icons.edit,
+                            onTap: () => BetFormModal.show(context, bet: bet),
+                          ),
+                          _Button(
+                            icon: Icons.delete,
+                            onTap: () => ConfirmationModal.show(
+                              context,
+                              title: 'Delete Bet',
+                              message: 'Are you sure you want to permanently delete this bet?',
+                              yesOnTap: () => deleteBet(bet),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                );
             }),
       );
 }

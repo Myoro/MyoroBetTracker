@@ -13,7 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   windowManager.ensureInitialized();
 
-  windowManager.setMinimumSize(const Size(1100, 400));
+  // TODO: Check if this looks fucked on android
+  windowManager.setMinimumSize(const Size(1150, 700));
 
   await Database.init();
   final bool isDarkMode = (await Database.get('dark_mode'))['enabled'] == 1 ? true : false;

@@ -32,6 +32,7 @@ class _AvailableIncomeCardState extends State<AvailableIncomeCard> {
       builder: (context, availableIncome) => ValueListenableBuilder(
         valueListenable: _showIncomeButtonIcon,
         builder: (context, icon, child) => BaseCard(
+          title: 'Income',
           content: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
