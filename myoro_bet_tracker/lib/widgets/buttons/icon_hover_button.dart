@@ -35,6 +35,7 @@ class _IconHoverButtonState extends State<IconHoverButton> {
       valueListenable: _hovered,
       builder: (context, hovered, child) => InkWell(
         hoverColor: Colors.transparent,
+        focusColor: Colors.transparent,
         onHover: (value) => _hovered.value = value,
         onTap: () => widget.onTap(),
         child: Container(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/dark_mode_cubit.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
-import 'package:myoro_bet_tracker/widgets/modals/create_bet_modal.dart';
+import 'package:myoro_bet_tracker/widgets/modals/bet_form_modal.dart';
 import 'package:myoro_bet_tracker/widgets/screens/home_screen.dart';
 
 /// [AppBar] for [HomeScreen]
@@ -25,7 +25,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           const Spacer(),
           ButtonWithoutFeedback(
-            onTap: () => CreateBetModal.show(context),
+            onTap: () => BetFormModal.show(context),
             child: Icon(
               Icons.add,
               size: 35,

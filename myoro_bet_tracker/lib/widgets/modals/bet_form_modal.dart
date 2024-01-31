@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
+import 'package:myoro_bet_tracker/enums/gained_or_lost.enum.dart';
 import 'package:myoro_bet_tracker/enums/type_of_bet_enum.dart';
 import 'package:myoro_bet_tracker/input_formatters/date_formatter.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
@@ -16,28 +17,31 @@ import 'package:myoro_bet_tracker/widgets/modals/base_modal.dart';
 /// Modal used to create bets
 ///
 /// Used in [HomeScreenAppBar]
-class CreateBetModal extends StatefulWidget {
-  const CreateBetModal({super.key});
+class BetFormModal extends StatefulWidget {
+  /// [BetModel] to edit (if we are editing and not creating a bet
+  final BetModel? bet;
 
-  static void show(BuildContext context) => showDialog(
+  const BetFormModal({super.key, this.bet});
+
+  static void show(BuildContext context, {BetModel? bet}) => showDialog(
         context: context,
-        builder: (context) => const CreateBetModal(),
+        builder: (context) => BetFormModal(bet: bet),
       );
 
   @override
-  State<CreateBetModal> createState() => _CreateBetModalState();
+  State<BetFormModal> createState() => _BetFormModalState();
 }
 
-class _CreateBetModalState extends State<CreateBetModal> {
+class _BetFormModalState extends State<BetFormModal> {
   final TextEditingController _betNameController = TextEditingController();
   final TextEditingController _moneyPlacedController = TextEditingController();
   final TextEditingController _gainedOrLostController = TextEditingController();
   final TextEditingController _datePlacedController = TextEditingController();
-  String? _betType;
+  String _betType = 'Soccer';
   String _gainedOrLost = 'Gained';
   final ValueNotifier<double> _modalHeight = ValueNotifier<double>(351);
 
-  void createBet() {
+  void finalizeBet() {
     // Validation
     if (_moneyPlacedController.text.isEmpty || _gainedOrLostController.text.isEmpty) {
       _modalHeight.value = 381;
@@ -45,17 +49,40 @@ class _CreateBetModalState extends State<CreateBetModal> {
       return;
     }
 
-    BlocProvider.of<BetsBloc>(context).add(AddBetEvent(
-      BetModel(
-        name: _betNameController.text,
-        sport: _betType,
-        placed: double.parse(double.parse(_moneyPlacedController.text).toStringAsFixed(2)),
-        gainedOrLost: double.parse((double.parse(_gainedOrLostController.text) * (_gainedOrLost == 'Gained' ? 1 : -1)).toStringAsFixed(2)),
-        datePlaced: _datePlacedController.text.isNotEmpty ? _datePlacedController.text : DateFormat('dd/MM/yyyy').format(DateTime.now()),
-      ),
-    ));
+    final BetModel bet = BetModel(
+      name: _betNameController.text,
+      sport: _betType,
+      placed: double.parse(double.parse(_moneyPlacedController.text).toStringAsFixed(2)),
+      gainedOrLost: double.parse((double.parse(_gainedOrLostController.text) * (_gainedOrLost == 'Gained' ? 1 : -1)).toStringAsFixed(2)),
+      datePlaced: _datePlacedController.text.isNotEmpty ? _datePlacedController.text : DateFormat('dd/MM/yyyy').format(DateTime.now()),
+    );
+
+    if (widget.bet == null) {
+      BlocProvider.of<BetsBloc>(context).add(AddBetEvent(bet));
+    } else {
+      BlocProvider.of<BetsBloc>(context).add(EditBetEvent(widget.bet!, bet));
+    }
 
     Navigator.pop(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.bet == null) return;
+
+    _betNameController.text = widget.bet!.name ?? '';
+    _moneyPlacedController.text = widget.bet!.placed.toStringAsFixed(2);
+    _gainedOrLostController.text = widget.bet!.gainedOrLost.toStringAsFixed(2);
+    _datePlacedController.text = widget.bet!.datePlaced;
+    _betType = TypeOfBetEnum.values
+        .firstWhere(
+          (value) => value.type == widget.bet!.sport,
+          orElse: () => TypeOfBetEnum.soccer,
+        )
+        .type;
+    _gainedOrLost = widget.bet!.gainedOrLost > 0 ? GainedOrLostEnum.gained.result : GainedOrLostEnum.lost.result;
   }
 
   @override
@@ -71,11 +98,11 @@ class _CreateBetModalState extends State<CreateBetModal> {
   Widget build(BuildContext context) => ValueListenableBuilder(
         valueListenable: _modalHeight,
         builder: (context, modalHeight, child) => BaseModal(
-          title: 'Create Bet',
+          title: '${widget.bet == null ? 'Create' : 'Edit'} Bet',
           size: Size(370, modalHeight),
           showFooterButtons: true,
-          yesOnTap: () => createBet(),
-          yesText: 'Create Bet',
+          yesOnTap: () => finalizeBet(),
+          yesText: widget.bet == null ? 'Create' : 'Save',
           content: Padding(
             padding: const EdgeInsets.only(right: 10),
             child: Column(

@@ -8,7 +8,19 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
   BetsBloc(List<BetModel> bets) : super(BetsState(bets)) {
     on<AddBetEvent>((event, emit) {
       Database.insert('bets', event.bet.toJSON());
-      emit(BetsState(bets..add(event.bet)));
+      emit(BetsState(state.bets..add(event.bet)));
+    });
+
+    on<EditBetEvent>((event, emit) {
+      Database.update(
+        'bets',
+        event.newBet.toJSON(),
+        event.oldBet.toJSON(),
+      );
+
+      final List<BetModel> newBetsList = List.from(state.bets);
+      newBetsList[newBetsList.indexOf(event.oldBet)] = event.newBet;
+      emit(BetsState(newBetsList));
     });
   }
 }

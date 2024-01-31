@@ -6,3 +6,9 @@ class AddBetEvent extends BetsEvent {
   final BetModel bet;
   AddBetEvent(this.bet);
 }
+
+class EditBetEvent extends BetsEvent {
+  final BetModel oldBet;
+  final BetModel newBet;
+  EditBetEvent(this.oldBet, this.newBet);
+}

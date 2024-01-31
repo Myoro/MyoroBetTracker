@@ -45,17 +45,6 @@ class Database {
       );
     ''');
     if ((await get('available_income')).isEmpty) insert('available_income', {'income': '0'});
-
-    // Widgets to display on startup
-    await _database.execute('''
-      CREATE TABLE IF NOT EXISTS show(
-        id                     INTEGER PRIMARY KEY,
-        show_performance_chart INTEGER,
-        show_bets_table        INTEGER,
-        show_bet_summary       INTEGER
-      );
-    ''');
-    if ((await get('show')).isEmpty) insert('show', {'show_performance_chart': 1, 'show_bets_table': 1, 'show_bet_summary': 1});
   }
 
   static Future<void> reset() async {
@@ -64,17 +53,51 @@ class Database {
     await init();
   }
 
-  static Future<List<Map<String, Object?>>> select(String table) async => await _database.query(table);
+  static Future<List<Map<String, Object?>>> select(String table, [Map<String, Object?>? conditions]) async {
+    final Map<String, dynamic>? formattedConditions = formatConditions(conditions);
 
-  static Future<Map<String, Object?>> get(String table) async {
-    final List<Map<String, Object?>> rows = await select(table);
+    return await _database.query(
+      table,
+      where: formattedConditions != null ? formattedConditions['where'] : null,
+      whereArgs: formattedConditions != null ? formattedConditions['where_args'] : null,
+    );
+  }
+
+  static Future<Map<String, Object?>> get(String table, [Map<String, Object?>? conditions]) async {
+    final List<Map<String, Object?>> rows = await select(table, conditions);
     return rows.isEmpty ? {} : rows[0];
   }
 
-  static Future<void> insert(String table, Map<String, Object?> data) async => await _database.insert(table, data);
+  static Future<void> insert(String table, Map<String, Object?> data) async {
+    if ((await get('bets', {'name': data['name']})).isNotEmpty) return;
+    await _database.insert(table, data);
+  }
 
-  static Future<void> update(String table, Map<String, Object?> values) async => await _database.update(table, values);
+  static Future<void> update(String table, Map<String, Object?> values, [Map<String, Object?>? conditions]) async {
+    final Map<String, dynamic>? formattedConditions = formatConditions(conditions);
+
+    await _database.update(
+      table,
+      values,
+      where: formattedConditions != null ? formattedConditions['where'] : null,
+      whereArgs: formattedConditions != null ? formattedConditions['where_args'] : null,
+    );
+  }
 
   static Future<void> delete(String table, {required String where, required List<Object?> whereArgs}) async =>
       await _database.delete(table, where: where, whereArgs: whereArgs);
+
+  static Map<String, dynamic>? formatConditions(Map<String, Object?>? conditions) {
+    if (conditions == null) return null;
+
+    final List<MapEntry> conditionsList = conditions.entries.toList();
+    String where = '';
+    final List<Object?> whereArgs = [];
+    for (final MapEntry entry in conditionsList) {
+      where += '${entry.key} = ?${conditionsList.indexOf(entry) != conditionsList.length - 1 ? ' AND ' : ''}';
+      whereArgs.add(entry.value);
+    }
+
+    return {'where': where, 'where_args': whereArgs};
+  }
 }

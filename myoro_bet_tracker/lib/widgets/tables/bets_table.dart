@@ -8,6 +8,7 @@ import 'package:myoro_bet_tracker/models/bet_model.dart';
 import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/icon_hover_button.dart';
+import 'package:myoro_bet_tracker/widgets/modals/bet_form_modal.dart';
 
 /// Displays bet history of the user
 ///
@@ -25,7 +26,7 @@ class _BetsTableState extends State<BetsTable> {
   @override
   void initState() {
     super.initState();
-    _filter = ValueNotifier<String>(BetsTableColumnsEnum.betName.column);
+    _filter = ValueNotifier<String>(BetsTableColumnsEnum.betName.attribute);
   }
 
   @override
@@ -39,7 +40,7 @@ class _BetsTableState extends State<BetsTable> {
         builder: (context, state) => ValueListenableBuilder(
             valueListenable: _filter,
             builder: (context, filter, child) {
-              final List<BetModel> bets = state.bets;
+              final List<BetModel> bets = List.from(state.bets);
               bets.sort((a, b) {
                 if (a.toJSON()[filter] != null) {
                   if (b.toJSON()[filter] != null) {
@@ -95,7 +96,7 @@ class _BetsTableState extends State<BetsTable> {
                         _NormalCell(text: bet.placed.toStringAsFixed(2)),
                         _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
                         _NormalCell(text: bet.datePlaced),
-                        _Button(icon: Icons.edit, onTap: () {}), // TODO: onTap
+                        _Button(icon: Icons.edit, onTap: () => BetFormModal.show(context, bet: bet)),
                         _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
                       ],
                     ),
@@ -134,7 +135,7 @@ class _TitleCellState extends State<_TitleCell> {
     final ThemeData theme = Theme.of(context);
 
     return ButtonWithoutFeedback(
-      onTap: () => widget.filter.value = BetsTableColumnsEnum.values.firstWhere((value) => value.column == widget.text).column,
+      onTap: () => widget.filter.value = BetsTableColumnsEnum.values.firstWhere((value) => value.column == widget.text).attribute,
       child: Padding(
         padding: widget.padding,
         child: Wrap(

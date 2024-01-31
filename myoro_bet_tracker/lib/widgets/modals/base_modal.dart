@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/text_hover_button.dart';
-import 'package:myoro_bet_tracker/widgets/modals/create_bet_modal.dart';
+import 'package:myoro_bet_tracker/widgets/modals/bet_form_modal.dart';
 
 /// Modal used to create all other modals in the application
 ///
 /// In other modal files, use static void show(BuildContext) => showDialog... to call BaseModal
-/// If your modal is stateful, check a modal like [CreateBetModal] to see how to use static void show
+/// If your modal is stateful, check a modal like [BetFormModal] to see how to use static void show
 class BaseModal extends StatelessWidget {
   final String? title;
   final Size size;
