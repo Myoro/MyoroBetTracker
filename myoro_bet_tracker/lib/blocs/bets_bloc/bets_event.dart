@@ -12,3 +12,8 @@ class EditBetEvent extends BetsEvent {
   final BetModel newBet;
   EditBetEvent(this.oldBet, this.newBet);
 }
+
+class DeleteBetEvent extends BetsEvent {
+  final BetModel bet;
+  DeleteBetEvent(this.bet);
+}

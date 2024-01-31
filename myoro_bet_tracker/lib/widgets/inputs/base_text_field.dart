@@ -12,11 +12,15 @@ class BaseTextField extends StatelessWidget {
   /// List of [TextInputFormatter], i.e. only allowing numbers and dots
   final List<TextInputFormatter> formatters;
 
+  /// Decides if the text is centered or not
+  final TextAlign textAlign;
+
   const BaseTextField({
     super.key,
     required this.size,
     required this.controller,
     this.formatters = const [],
+    this.textAlign = TextAlign.start,
   });
 
   @override
@@ -36,6 +40,7 @@ class BaseTextField extends StatelessWidget {
         controller: controller,
         style: theme.textTheme.bodyMedium,
         inputFormatters: formatters,
+        textAlign: textAlign,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(bottom: 8),
           focusedBorder: border,

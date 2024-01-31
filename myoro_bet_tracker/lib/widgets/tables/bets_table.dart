@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
+import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_state.dart';
 import 'package:myoro_bet_tracker/enums/bets_table_column_enums.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
@@ -9,6 +10,7 @@ import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/icon_hover_button.dart';
 import 'package:myoro_bet_tracker/widgets/modals/bet_form_modal.dart';
+import 'package:myoro_bet_tracker/widgets/modals/confirmation_modal.dart';
 
 /// Displays bet history of the user
 ///
@@ -22,6 +24,11 @@ class BetsTable extends StatefulWidget {
 
 class _BetsTableState extends State<BetsTable> {
   late final ValueNotifier<String> _filter;
+
+  void deleteBet(BetModel bet) {
+    BlocProvider.of<BetsBloc>(context).add(DeleteBetEvent(bet));
+    Navigator.pop(context);
+  }
 
   @override
   void initState() {
@@ -96,8 +103,19 @@ class _BetsTableState extends State<BetsTable> {
                         _NormalCell(text: bet.placed.toStringAsFixed(2)),
                         _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
                         _NormalCell(text: bet.datePlaced),
-                        _Button(icon: Icons.edit, onTap: () => BetFormModal.show(context, bet: bet)),
-                        _Button(icon: Icons.delete, onTap: () {}), // TODO: onTap
+                        _Button(
+                          icon: Icons.edit,
+                          onTap: () => BetFormModal.show(context, bet: bet),
+                        ),
+                        _Button(
+                          icon: Icons.delete,
+                          onTap: () => ConfirmationModal.show(
+                            context,
+                            title: 'Delete Bet',
+                            message: 'Are you sure you want to permanently delete this bet?',
+                            yesOnTap: () => deleteBet(bet),
+                          ),
+                        ),
                       ],
                     ),
                 ],
@@ -187,7 +205,7 @@ class _Button extends StatelessWidget {
   Widget build(BuildContext context) => TableCell(
         verticalAlignment: TableCellVerticalAlignment.middle,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
+          padding: const EdgeInsets.only(top: 5, left: 3, right: 3),
           child: IconHoverButton(
             onTap: () => onTap(),
             icon: icon,

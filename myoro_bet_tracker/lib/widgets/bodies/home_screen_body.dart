@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myoro_bet_tracker/widgets/cards/available_income_card.dart';
 import 'package:myoro_bet_tracker/widgets/tables/bets_table.dart';
 
 class HomeScreenBody extends StatelessWidget {
@@ -10,7 +11,13 @@ class HomeScreenBody extends StatelessWidget {
         child: OverflowBox(
           alignment: Alignment.topCenter,
           minWidth: 1000,
-          child: BetsTable(),
+          child: Column(
+            children: [
+              BetsTable(),
+              SizedBox(height: 10),
+              AvailableIncomeCard(),
+            ],
+          ),
         ),
       );
 }

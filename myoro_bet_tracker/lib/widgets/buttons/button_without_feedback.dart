@@ -9,10 +9,14 @@ class ButtonWithoutFeedback extends StatefulWidget {
   /// Contents of the button
   final Widget child;
 
+  /// If not null, shows a tooltip when [ButtonWithoutFeedback] is hovered
+  final String? tooltip;
+
   const ButtonWithoutFeedback({
     super.key,
     required this.onTap,
     required this.child,
+    this.tooltip,
   });
 
   @override
@@ -31,13 +35,16 @@ class _ButtonWithoutFeedbackState extends State<ButtonWithoutFeedback> {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder(
         valueListenable: _cursor,
-        builder: (context, cursor, child) => MouseRegion(
-          cursor: cursor,
-          onEnter: (_) => _cursor.value = SystemMouseCursors.click,
-          onExit: (_) => _cursor.value = SystemMouseCursors.basic,
-          child: GestureDetector(
-            onTap: () => widget.onTap(),
-            child: widget.child,
+        builder: (context, cursor, child) => Tooltip(
+          message: widget.tooltip ?? '',
+          child: MouseRegion(
+            cursor: cursor,
+            onEnter: (_) => _cursor.value = SystemMouseCursors.click,
+            onExit: (_) => _cursor.value = SystemMouseCursors.basic,
+            child: GestureDetector(
+              onTap: () => widget.onTap(),
+              child: widget.child,
+            ),
           ),
         ),
       );

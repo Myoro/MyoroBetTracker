@@ -23,7 +23,7 @@ class Database {
 
     // Dark mode table
     await _database.execute('CREATE TABLE IF NOT EXISTS dark_mode(id INTEGER PRIMARY KEY, enabled INTEGER);');
-    if ((await get('dark_mode')).isEmpty) _database.insert('dark_mode', {'enabled': 1});
+    if ((await get('dark_mode')).isEmpty) _database.insert('dark_mode', {'enabled': 2}); // 0 = light mode, 1 = dark mode, 2 = system
 
     // Bets table
     await _database.execute('''
@@ -84,8 +84,15 @@ class Database {
     );
   }
 
-  static Future<void> delete(String table, {required String where, required List<Object?> whereArgs}) async =>
-      await _database.delete(table, where: where, whereArgs: whereArgs);
+  static Future<void> delete(String table, [Map<String, Object?>? conditions]) async {
+    final Map<String, dynamic>? formattedConditions = formatConditions(conditions);
+
+    await _database.delete(
+      table,
+      where: formattedConditions != null ? formattedConditions['where'] : null,
+      whereArgs: formattedConditions != null ? formattedConditions['where_args'] : null,
+    );
+  }
 
   static Map<String, dynamic>? formatConditions(Map<String, Object?>? conditions) {
     if (conditions == null) return null;

@@ -8,12 +8,26 @@ import 'package:myoro_bet_tracker/widgets/modals/bet_form_modal.dart';
 /// In other modal files, use static void show(BuildContext) => showDialog... to call BaseModal
 /// If your modal is stateful, check a modal like [BetFormModal] to see how to use static void show
 class BaseModal extends StatelessWidget {
+  /// Title of the modal
   final String? title;
+
+  /// The (mandatory) size of the modal
   final Size size;
+
+  /// Dictates whether there will be a yes/no buttons at the footer of the modal
   final bool showFooterButtons;
+
+  /// onTap function for the positive action button of [BaseModal]
   final Function? yesOnTap;
+
+  /// Text of the positive action button of [BaseModal]
   final String? yesText;
+
+  /// Content of [BaseModal]
   final Widget content;
+
+  /// [TextStyle] of [BaseModal]'s title
+  final TextStyle? titleTextStyle;
 
   const BaseModal({
     super.key,
@@ -23,6 +37,7 @@ class BaseModal extends StatelessWidget {
     this.yesOnTap,
     this.yesText,
     required this.content,
+    this.titleTextStyle,
   });
 
   @override
@@ -32,6 +47,7 @@ class BaseModal extends StatelessWidget {
     }
 
     final ThemeData theme = Theme.of(context);
+    final TextStyle titleStyle = titleTextStyle == null ? theme.textTheme.titleLarge! : titleTextStyle!;
 
     return Center(
       child: Container(
@@ -59,10 +75,7 @@ class BaseModal extends StatelessWidget {
                 Row(
                   children: [
                     if (title != null)
-                      Text(
-                        title!,
-                        style: theme.textTheme.titleLarge,
-                      ),
+                      Text(title!, style: titleStyle),
                     const Spacer(),
                     ButtonWithoutFeedback(
                       onTap: () => Navigator.pop(context),

@@ -22,5 +22,14 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
       newBetsList[newBetsList.indexOf(event.oldBet)] = event.newBet;
       emit(BetsState(newBetsList));
     });
+
+    on<DeleteBetEvent>((event, emit) {
+      Database.delete('bets', event.bet.toJSON());
+
+      final List<BetModel> newBetsList = List.from(state.bets);
+      newBetsList.remove(event.bet);
+
+      emit(BetsState(newBetsList));
+    });
   }
 }
