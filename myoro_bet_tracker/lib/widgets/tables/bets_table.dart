@@ -47,6 +47,8 @@ class _BetsTableState extends State<BetsTable> {
         builder: (context, state) => ValueListenableBuilder(
             valueListenable: _filter,
             builder: (context, filter, child) {
+              final double screenWidth = MediaQuery.of(context).size.width;
+
               final List<BetModel> bets = List.from(state.bets);
               bets.sort((a, b) {
                 if (a.toJSON()[filter] != null) {
@@ -60,7 +62,7 @@ class _BetsTableState extends State<BetsTable> {
                 }
               });
 
-              List<Widget> titleCells = BetsTableColumnsEnum.values
+              List<_TitleCell> titleCells = BetsTableColumnsEnum.values
                   .map((value) => _TitleCell(
                         text: value.column,
                         filter: _filter,
@@ -75,10 +77,15 @@ class _BetsTableState extends State<BetsTable> {
                       ))
                   .toList();
 
+              if(screenWidth <= 1055) titleCells.removeLast();
+              if(screenWidth <= 867)  titleCells.removeAt(1);
+              if(screenWidth <= 681) titleCells.removeAt(0);
+              if(screenWidth <= 495) titleCells[1].text = '\$ Gained';
+
                 return Table(
-                  columnWidths: const {
-                    5: FixedColumnWidth(32),
-                    6: FixedColumnWidth(32),
+                  columnWidths: {
+                    titleCells.length + 1: FixedColumnWidth(bets.isNotEmpty ? 32 : 0),
+                    titleCells.length: FixedColumnWidth(bets.isNotEmpty ? 32 : 0),
                   },
                   children: [
                     TableRow(
@@ -92,7 +99,8 @@ class _BetsTableState extends State<BetsTable> {
                         ),
                       ),
                       children: [
-                        for (final Widget titleCell in titleCells) titleCell,
+                        for (final _TitleCell titleCell in titleCells)
+                          titleCell,
                         const SizedBox(),
                         const SizedBox(),
                       ],
@@ -100,11 +108,11 @@ class _BetsTableState extends State<BetsTable> {
                     for (final BetModel bet in bets)
                       TableRow(
                         children: [
-                          _NormalCell(text: bet.name ?? 'N/A'),
-                          _NormalCell(text: bet.sport ?? 'N/A'),
-                          _NormalCell(text: bet.placed.toStringAsFixed(2)),
-                          _NormalCell(text: bet.gainedOrLost.toStringAsFixed(2)),
-                          _NormalCell(text: bet.datePlaced),
+                          if(titleCells.length >= 3) _NormalCell(text: bet.name ?? 'N/A'),
+                          if(titleCells.length >= 4) _NormalCell(text: bet.sport ?? 'N/A'),
+                          _NormalCell(text: '\$${bet.placed.toStringAsFixed(2)}'),
+                          _NormalCell(text: '\$${bet.gainedOrLost.toStringAsFixed(2)}'),
+                          if(titleCells.length == 5) _NormalCell(text: bet.datePlaced),
                           _Button(
                             icon: Icons.edit,
                             onTap: () => BetFormModal.show(context, bet: bet),
@@ -126,12 +134,13 @@ class _BetsTableState extends State<BetsTable> {
       );
 }
 
+// ignore: must_be_immutable
 class _TitleCell extends StatefulWidget {
-  final String text;
+  String text;
   final EdgeInsets padding;
   final ValueNotifier<String> filter;
 
-  const _TitleCell({
+  _TitleCell({
     required this.text,
     this.padding = const EdgeInsets.all(5),
     required this.filter,
@@ -191,6 +200,8 @@ class _NormalCell extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.bodyMedium,
         textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       );
 }
 

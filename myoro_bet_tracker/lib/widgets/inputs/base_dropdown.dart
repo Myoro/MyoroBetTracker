@@ -57,7 +57,10 @@ class _BaseDropdownState extends State<BaseDropdown> {
                     ),
                   ))
               .toList(),
-          onChanged: (value) => widget.onChanged(value!),
+          onChanged: (value) {
+            _value.value = value!;
+            widget.onChanged(value);
+          }
         ),
       ),
     );

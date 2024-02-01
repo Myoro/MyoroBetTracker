@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/available_income_cubit.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
+import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
 import 'package:myoro_bet_tracker/blocs/dark_mode_cubit.dart';
 import 'package:myoro_bet_tracker/database.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
@@ -13,8 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   windowManager.ensureInitialized();
 
-  // TODO: Check if this looks fucked on android
-  windowManager.setMinimumSize(const Size(1150, 700));
+  windowManager.setMinimumSize(const Size(500, 500));
 
   await Database.init();
   final bool isDarkMode = (await Database.get('dark_mode'))['enabled'] == 1 ? true : false;
@@ -25,7 +25,7 @@ void main() async {
     // Since this is a small project, we use a global bloc provider structure
     providers: [
       BlocProvider(create: (context) => DarkModeCubit(isDarkMode)),
-      BlocProvider(create: (context) => BetsBloc(bets)),
+      BlocProvider(create: (context) => BetsBloc(bets)..add(SetupAnalyticsEvent())),
       BlocProvider(create: (context) => AvailableIncomeCubit(availableIncome)),
     ],
     child: const App(),

@@ -7,20 +7,17 @@ class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
 
   @override
-  Widget build(BuildContext context) => const Padding(
-        padding: EdgeInsets.all(20),
-        child: OverflowBox(
-          alignment: Alignment.topCenter,
-          minWidth: 1000,
-          child: Column(
-            children: [
-              AvailableIncomeCard(),
-              SizedBox(height: 10),
-              BetSummaryCard(),
-              SizedBox(height: 10),
-              BetsTableCard(),
-            ],
-          ),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(3),
+        child: ListView(
+          padding: const EdgeInsets.all(17),
+          children: const [
+            AvailableIncomeCard(),
+            SizedBox(height: 10),
+            BetSummaryCard(),
+            SizedBox(height: 10),
+            BetsTableCard(),
+          ],
         ),
       );
 }

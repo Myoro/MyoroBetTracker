@@ -21,7 +21,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           Text(
-            'MyoroBetTracker',
+            'Bet Tracker',
             style: theme.textTheme.titleLarge,
           ),
           const Spacer(),
