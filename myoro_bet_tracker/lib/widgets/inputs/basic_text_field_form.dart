@@ -39,7 +39,7 @@ class BasicTextFieldForm extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             BaseTextField(
-              size: const Size(180, 40),
+              size: const Size(172, 40),
               controller: controller,
               formatters: formatters,
             ),

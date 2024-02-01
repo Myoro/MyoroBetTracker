@@ -32,7 +32,7 @@ class BasicDropdownForm extends StatelessWidget {
           BaseDropdown(
             items: items,
             onChanged: onChanged,
-            width: 180,
+            width: 172,
           ),
         ],
       );

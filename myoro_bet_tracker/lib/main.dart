@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/available_income_cubit.dart';
@@ -12,9 +14,11 @@ import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  windowManager.ensureInitialized();
 
-  windowManager.setMinimumSize(const Size(500, 500));
+  if(!Platform.isIOS && !Platform.isAndroid) {
+    windowManager.ensureInitialized();
+    windowManager.setMinimumSize(const Size(500, 500));
+  }
 
   await Database.init();
   final bool isDarkMode = (await Database.get('dark_mode'))['enabled'] == 1 ? true : false;

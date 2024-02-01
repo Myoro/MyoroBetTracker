@@ -48,7 +48,7 @@ class DropdownAndTextFieldForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 9),
             child: BaseTextField(
-              size: const Size(82, 40),
+              size: const Size(70, 40),
               controller: controller,
               formatters: formatters,
             ),

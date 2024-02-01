@@ -52,7 +52,7 @@ class _AvailableIncomeModalState extends State<AvailableIncomeModal> {
         title: 'Set Available Income',
         titleTextStyle: textTheme.titleMedium,
         showFooterButtons: true,
-        yesText: 'Set Income',
+        yesText: 'Save',
         yesOnTap: () => setAvailableIncome(),
         content: Padding(
           padding: const EdgeInsets.only(bottom: 10),

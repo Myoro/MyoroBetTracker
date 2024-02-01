@@ -99,7 +99,7 @@ class _BetFormModalState extends State<BetFormModal> {
         valueListenable: _modalHeight,
         builder: (context, modalHeight, child) => BaseModal(
           title: '${widget.bet == null ? 'Create' : 'Edit'} Bet',
-          size: Size(370, modalHeight),
+          size: Size(350, modalHeight),
           showFooterButtons: true,
           yesOnTap: () => finalizeBet(),
           yesText: widget.bet == null ? 'Create' : 'Save',
@@ -112,7 +112,7 @@ class _BetFormModalState extends State<BetFormModal> {
                   controller: _betNameController,
                 ),
                 BasicDropdownForm(
-                  title: 'Sport or Casino?',
+                  title: 'Sport/Casino',
                   items: TypeOfBetEnum.values.map((value) => value.type).toList(),
                   onChanged: (value) => _betType = value,
                 ),
@@ -123,7 +123,7 @@ class _BetFormModalState extends State<BetFormModal> {
                   formatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
                 ),
                 DropdownAndTextFieldForm(
-                  title: 'Gained / Lost',
+                  title: 'Gained/Lost',
                   controller: _gainedOrLostController,
                   obligatory: true,
                   onChanged: (value) => _gainedOrLost = value,
