@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myoro_bet_tracker/enums/gained_or_lost.enum.dart';
+import 'package:myoro_bet_tracker/enums/gained_or_lost_enum.dart';
 import 'package:myoro_bet_tracker/widgets/inputs/base_dropdown.dart';
 import 'package:myoro_bet_tracker/widgets/inputs/base_text_field.dart';
 

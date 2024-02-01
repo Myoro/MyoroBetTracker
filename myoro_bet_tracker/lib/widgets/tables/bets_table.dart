@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_state.dart';
-import 'package:myoro_bet_tracker/enums/bets_table_column_enums.dart';
+import 'package:myoro_bet_tracker/enums/bets_table_columns_enum.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
 import 'package:myoro_bet_tracker/widgets/cards/bets_table_card.dart';
 import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';

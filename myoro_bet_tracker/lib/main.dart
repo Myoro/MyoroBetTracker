@@ -8,7 +8,7 @@ import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
 import 'package:myoro_bet_tracker/blocs/dark_mode_cubit.dart';
 import 'package:myoro_bet_tracker/database.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
-import 'package:myoro_bet_tracker/themes.dart';
+import 'package:myoro_bet_tracker/theme.dart';
 import 'package:myoro_bet_tracker/widgets/screens/home_screen.dart';
 import 'package:window_manager/window_manager.dart';
 

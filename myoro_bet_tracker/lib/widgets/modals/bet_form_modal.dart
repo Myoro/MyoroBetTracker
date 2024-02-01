@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_event.dart';
-import 'package:myoro_bet_tracker/enums/gained_or_lost.enum.dart';
+import 'package:myoro_bet_tracker/enums/gained_or_lost_enum.dart';
 import 'package:myoro_bet_tracker/enums/type_of_bet_enum.dart';
 import 'package:myoro_bet_tracker/input_formatters/date_formatter.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
