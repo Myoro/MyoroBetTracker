@@ -16,7 +16,7 @@ class AvailableIncomeCard extends StatefulWidget {
 }
 
 class _AvailableIncomeCardState extends State<AvailableIncomeCard> {
-  final ValueNotifier<IconData> _showIncomeButtonIcon = ValueNotifier<IconData>(Icons.visibility_off);
+  final ValueNotifier<IconData> _showIncomeButtonIcon = ValueNotifier<IconData>(Icons.visibility);
 
   @override
   void dispose() {
@@ -37,7 +37,7 @@ class _AvailableIncomeCardState extends State<AvailableIncomeCard> {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                icon == Icons.visibility ? availableIncome.toStringAsFixed(2) : '*' * availableIncome.toStringAsFixed(2).length,
+                icon == Icons.visibility_off ? '\$${availableIncome.toStringAsFixed(2)}' : '*' * availableIncome.toStringAsFixed(2).length,
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(width: 10),
