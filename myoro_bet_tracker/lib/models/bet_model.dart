@@ -1,11 +1,13 @@
-class BetModel {
+import 'package:equatable/equatable.dart';
+
+class BetModel extends Equatable {
   final String? name;
   final String? sport;
   final double placed;
   final double gainedOrLost;
   final String datePlaced;
 
-  BetModel({
+  const BetModel({
     this.name,
     this.sport,
     required this.placed,
@@ -27,4 +29,13 @@ class BetModel {
         'gained_or_lost': gainedOrLost.toStringAsFixed(2),
         'date_placed': datePlaced,
       };
+
+  @override
+  List<Object?> get props => [
+    name,
+    sport,
+    placed,
+    gainedOrLost,
+    datePlaced,
+  ];
 }
