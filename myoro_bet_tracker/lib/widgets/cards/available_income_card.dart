@@ -6,10 +6,10 @@ import 'package:myoro_bet_tracker/widgets/buttons/button_without_feedback.dart';
 import 'package:myoro_bet_tracker/widgets/cards/base_card.dart';
 
 /// Hides the available income by default, by clicking on the eye, shows the income to the user
-/// 
+///
 /// Used in [HomeScreenBody]
 class AvailableIncomeCard extends StatefulWidget {
-  const AvailableIncomeCard({ super.key });
+  const AvailableIncomeCard({super.key});
 
   @override
   State<AvailableIncomeCard> createState() => _AvailableIncomeCardState();
@@ -37,9 +37,7 @@ class _AvailableIncomeCardState extends State<AvailableIncomeCard> {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                icon == Icons.visibility
-                  ? availableIncome.toStringAsFixed(2)
-                  : '*' * availableIncome.toStringAsFixed(2).length,
+                icon == Icons.visibility ? availableIncome.toStringAsFixed(2) : '*' * availableIncome.toStringAsFixed(2).length,
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(width: 10),

@@ -28,8 +28,8 @@ class BaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => expanded
-    ? Expanded(child: _Widget(title: title, width: width, height: height, content: content))
-    : _Widget(title: title, width: width, height: height, content: content);
+      ? Expanded(child: _Widget(title: title, width: width, height: height, content: content))
+      : _Widget(title: title, width: width, height: height, content: content);
 }
 
 class _Widget extends StatelessWidget {
@@ -61,7 +61,7 @@ class _Widget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(title != null)
+            if (title != null)
               Text(
                 title!,
                 style: theme.textTheme.titleMedium,

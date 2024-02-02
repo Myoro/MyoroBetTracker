@@ -77,59 +77,58 @@ class _BetsTableState extends State<BetsTable> {
                       ))
                   .toList();
 
-              if(screenWidth <= 1055) titleCells.removeLast();
-              if(screenWidth <= 867)  titleCells.removeAt(1);
-              if(screenWidth <= 681) titleCells.removeAt(0);
-              if(screenWidth <= 495) titleCells[1].text = '\$ Gained';
+              if (screenWidth <= 1055) titleCells.removeLast();
+              if (screenWidth <= 867) titleCells.removeAt(1);
+              if (screenWidth <= 681) titleCells.removeAt(0);
+              if (screenWidth <= 495) titleCells[1].text = '\$ Gained';
 
-                return Table(
-                  columnWidths: {
-                    titleCells.length + 1: FixedColumnWidth(bets.isNotEmpty ? 32 : 0),
-                    titleCells.length: FixedColumnWidth(bets.isNotEmpty ? 32 : 0),
-                  },
-                  children: [
-                    TableRow(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(10),
-                          topRight: const Radius.circular(10),
-                          bottomLeft: bets.isEmpty ? const Radius.circular(10) : Radius.zero,
-                          bottomRight: bets.isEmpty ? const Radius.circular(10) : Radius.zero,
-                        ),
+              return Table(
+                columnWidths: {
+                  titleCells.length + 1: FixedColumnWidth(bets.isNotEmpty ? 32 : 0),
+                  titleCells.length: FixedColumnWidth(bets.isNotEmpty ? 32 : 0),
+                },
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(10),
+                        topRight: const Radius.circular(10),
+                        bottomLeft: bets.isEmpty ? const Radius.circular(10) : Radius.zero,
+                        bottomRight: bets.isEmpty ? const Radius.circular(10) : Radius.zero,
                       ),
+                    ),
+                    children: [
+                      for (final _TitleCell titleCell in titleCells) titleCell,
+                      const SizedBox(),
+                      const SizedBox(),
+                    ],
+                  ),
+                  for (final BetModel bet in bets)
+                    TableRow(
                       children: [
-                        for (final _TitleCell titleCell in titleCells)
-                          titleCell,
-                        const SizedBox(),
-                        const SizedBox(),
+                        if (titleCells.length >= 3) _NormalCell(text: bet.name ?? 'N/A'),
+                        if (titleCells.length >= 4) _NormalCell(text: bet.sport ?? 'N/A'),
+                        _NormalCell(text: '\$${bet.placed.toStringAsFixed(2)}'),
+                        _NormalCell(text: '\$${bet.gainedOrLost.toStringAsFixed(2)}'),
+                        if (titleCells.length == 5) _NormalCell(text: bet.datePlaced),
+                        _Button(
+                          icon: Icons.edit,
+                          onTap: () => BetFormModal.show(context, bet: bet),
+                        ),
+                        _Button(
+                          icon: Icons.delete,
+                          onTap: () => ConfirmationModal.show(
+                            context,
+                            title: 'Delete Bet',
+                            message: 'Are you sure you want to permanently delete this bet?',
+                            yesOnTap: () => deleteBet(bet),
+                          ),
+                        ),
                       ],
                     ),
-                    for (final BetModel bet in bets)
-                      TableRow(
-                        children: [
-                          if(titleCells.length >= 3) _NormalCell(text: bet.name ?? 'N/A'),
-                          if(titleCells.length >= 4) _NormalCell(text: bet.sport ?? 'N/A'),
-                          _NormalCell(text: '\$${bet.placed.toStringAsFixed(2)}'),
-                          _NormalCell(text: '\$${bet.gainedOrLost.toStringAsFixed(2)}'),
-                          if(titleCells.length == 5) _NormalCell(text: bet.datePlaced),
-                          _Button(
-                            icon: Icons.edit,
-                            onTap: () => BetFormModal.show(context, bet: bet),
-                          ),
-                          _Button(
-                            icon: Icons.delete,
-                            onTap: () => ConfirmationModal.show(
-                              context,
-                              title: 'Delete Bet',
-                              message: 'Are you sure you want to permanently delete this bet?',
-                              yesOnTap: () => deleteBet(bet),
-                            ),
-                          ),
-                        ],
-                      ),
-                  ],
-                );
+                ],
+              );
             }),
       );
 }

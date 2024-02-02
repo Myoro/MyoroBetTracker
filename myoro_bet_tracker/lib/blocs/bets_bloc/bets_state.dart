@@ -18,10 +18,11 @@ class BetsState {
     double? netGainOrLoss,
     double? totalMoneyPlacedOnBets,
     double? winLossPercentage,
-  }) => BetsState(
-    bets: bets ?? this.bets,
-    netGainOrLoss: netGainOrLoss ?? this.netGainOrLoss,
-    totalMoneyPlacedOnBets: totalMoneyPlacedOnBets ?? this.totalMoneyPlacedOnBets,
-    winLossPercentage: winLossPercentage ?? this.winLossPercentage,
-  );
+  }) =>
+      BetsState(
+        bets: bets ?? this.bets,
+        netGainOrLoss: netGainOrLoss ?? this.netGainOrLoss,
+        totalMoneyPlacedOnBets: totalMoneyPlacedOnBets ?? this.totalMoneyPlacedOnBets,
+        winLossPercentage: winLossPercentage ?? this.winLossPercentage,
+      );
 }

@@ -74,8 +74,7 @@ class BaseModal extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    if (title != null)
-                      Text(title!, style: titleStyle),
+                    if (title != null) Text(title!, style: titleStyle),
                     const Spacer(),
                     ButtonWithoutFeedback(
                       onTap: () => Navigator.pop(context),

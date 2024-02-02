@@ -32,10 +32,10 @@ class BetModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    name,
-    sport,
-    placed,
-    gainedOrLost,
-    datePlaced,
-  ];
+        name,
+        sport,
+        placed,
+        gainedOrLost,
+        datePlaced,
+      ];
 }

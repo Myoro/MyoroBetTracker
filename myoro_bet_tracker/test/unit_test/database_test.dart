@@ -12,7 +12,7 @@ void main() {
 
   setUp(() async {
     const MethodChannel('plugins.flutter.io/path_provider').setMockMethodCallHandler((MethodCall methodCall) async {
-      if(methodCall.method == 'getApplicationSupportDirectory') return '.';
+      if (methodCall.method == 'getApplicationSupportDirectory') return '.';
     });
     await Database.init();
   });
@@ -61,8 +61,10 @@ void main() {
     expect(row.isEmpty, true);
   });
 
-  test('Database::formatConditions', () => expect(
-    Database.formatConditions(BetModelConstants.bet1.toJSON()),
-    BetModelConstants.bet1ConditionsFormatted,
-  ));
+  test(
+      'Database::formatConditions',
+      () => expect(
+            Database.formatConditions(BetModelConstants.bet1.toJSON()),
+            BetModelConstants.bet1ConditionsFormatted,
+          ));
 }

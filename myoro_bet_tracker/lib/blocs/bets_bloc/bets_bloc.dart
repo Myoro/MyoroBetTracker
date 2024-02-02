@@ -14,10 +14,10 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
     int betsWon = 0;
     int betsLost = 0;
 
-    for(final BetModel bet in bets) {
+    for (final BetModel bet in bets) {
       netGainOrLossResult += bet.gainedOrLost;
       totalMoneyPlacedOnBetsResult += bet.placed;
-      if(bet.gainedOrLost > 0) {
+      if (bet.gainedOrLost > 0) {
         betsWon += 1;
       } else {
         betsLost += 1;

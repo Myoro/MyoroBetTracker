@@ -7,12 +7,12 @@ import 'package:myoro_bet_tracker/widgets/modals/base_modal.dart';
 
 /// Modal used to set or edit the available income the user has
 class AvailableIncomeModal extends StatefulWidget {
-  const AvailableIncomeModal({ super.key });
+  const AvailableIncomeModal({super.key});
 
   static void show(BuildContext context) => showDialog(
-    context: context,
-    builder: (context) => const AvailableIncomeModal(),
-  );
+        context: context,
+        builder: (context) => const AvailableIncomeModal(),
+      );
 
   @override
   State<AvailableIncomeModal> createState() => _AvailableIncomeModalState();
@@ -23,7 +23,7 @@ class _AvailableIncomeModalState extends State<AvailableIncomeModal> {
   final ValueNotifier<double> _modalHeight = ValueNotifier<double>(157);
 
   void setAvailableIncome() {
-    if(_controller.text.isEmpty) {
+    if (_controller.text.isEmpty) {
       _modalHeight.value = 195;
       Future.delayed(const Duration(milliseconds: 1500), () => _modalHeight.value = 157);
     } else {
@@ -72,7 +72,7 @@ class _AvailableIncomeModalState extends State<AvailableIncomeModal> {
                   ),
                 ],
               ),
-              if(modalHeight != 157) ...[
+              if (modalHeight != 157) ...[
                 const SizedBox(height: 12),
                 Text(
                   'Blank Field',

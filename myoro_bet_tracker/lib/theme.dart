@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 TextStyle _textStyle(
-  bool isDarkMode,
-  {
-    required double fontSize,
-    FontWeight fontWeight = FontWeight.normal,
-    FontStyle fontStyle = FontStyle.normal,
-  }
-) =>
+  bool isDarkMode, {
+  required double fontSize,
+  FontWeight fontWeight = FontWeight.normal,
+  FontStyle fontStyle = FontStyle.normal,
+}) =>
     TextStyle(
       fontSize: fontSize,
       fontWeight: fontWeight,

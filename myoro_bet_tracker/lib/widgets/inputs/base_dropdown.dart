@@ -41,27 +41,26 @@ class _BaseDropdownState extends State<BaseDropdown> {
       builder: (context, value, child) => SizedBox(
         width: widget.width,
         child: DropdownButton(
-          value: value,
-          isExpanded: widget.width != null,
-          underline: Container(
-            width: double.infinity,
-            height: 2,
-            color: theme.colorScheme.onPrimary,
-          ),
-          items: widget.items
-              .map((item) => DropdownMenuItem(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                  ))
-              .toList(),
-          onChanged: (value) {
-            _value.value = value!;
-            widget.onChanged(value);
-          }
-        ),
+            value: value,
+            isExpanded: widget.width != null,
+            underline: Container(
+              width: double.infinity,
+              height: 2,
+              color: theme.colorScheme.onPrimary,
+            ),
+            items: widget.items
+                .map((item) => DropdownMenuItem(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              _value.value = value!;
+              widget.onChanged(value);
+            }),
       ),
     );
   }
