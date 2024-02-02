@@ -32,7 +32,7 @@ class BasicTextFieldForm extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                '${obligatory ? '*' : ''} $title',
+                '${obligatory ? '* ' : ''}$title',
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),

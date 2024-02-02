@@ -38,7 +38,7 @@ class DropdownAndTextFieldForm extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 9),
               child: Text(
-                '${obligatory ? '*' : ''}$title',
+                '${obligatory ? '* ' : ''}$title',
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),

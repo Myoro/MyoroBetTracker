@@ -72,10 +72,11 @@ class BaseModal extends StatelessWidget {
             // Allows custom widgets like [TextHoverButton] to work propertly
             child: Column(
               children: [
-                Row(
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     if (title != null) Text(title!, style: titleStyle),
-                    const Spacer(),
+                    SizedBox(width: size.width - 165),
                     ButtonWithoutFeedback(
                       onTap: () => Navigator.pop(context),
                       child: Icon(
