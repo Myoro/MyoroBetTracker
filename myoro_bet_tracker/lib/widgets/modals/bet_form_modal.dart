@@ -129,7 +129,11 @@ class _BetFormModalState extends State<BetFormModal> {
                   onChanged: (value) => _gainedOrLost = value,
                   formatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
                 ),
-                BasicTextFieldForm(title: 'Date Placed', controller: _datePlacedController, formatters: [DateFormatter()]),
+                BasicTextFieldForm(
+                  title: 'Date Placed',
+                  controller: _datePlacedController,
+                  formatters: [DateFormatter()],
+                ),
                 if (modalHeight != 351)
                   Text(
                     'Bet Incomplete',
