@@ -18,6 +18,7 @@ void main() {
   });
 
   test('Database::init & Database::resetDatabase', () async {
+    await Database.init();
     await Database.reset();
     await Database.init();
   });
