@@ -1,4 +1,4 @@
-name: Unit tests
+name: Unit & Widget Tests
 
 on: [push]
 
@@ -19,4 +19,4 @@ jobs:
         run: cd myoro_bet_tracker && flutter pub get
 
       - name: Run tests
-        run: cd myoro_bet_tracker && flutter test test/unit_testing
+        run: cd myoro_bet_tracker && flutter test test

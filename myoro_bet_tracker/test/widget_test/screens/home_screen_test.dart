@@ -7,7 +7,7 @@ import 'package:myoro_bet_tracker/widgets/bodies/home_screen_body.dart';
 import 'package:myoro_bet_tracker/widgets/screens/home_screen.dart';
 
 import '../../base_test_widget.dart';
-import '../../constants/bet_model_constants.dart';
+import '../../bet_model_constants.dart';
 
 void main() {
   testWidgets('HomeScreen Widget Test', (tester) async {

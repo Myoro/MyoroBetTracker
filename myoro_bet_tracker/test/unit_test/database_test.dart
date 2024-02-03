@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:myoro_bet_tracker/database.dart';
 import 'package:myoro_bet_tracker/models/bet_model.dart';
 
-import '../constants/bet_model_constants.dart';
+import '../bet_model_constants.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

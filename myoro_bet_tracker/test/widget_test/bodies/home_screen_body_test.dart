@@ -8,7 +8,7 @@ import 'package:myoro_bet_tracker/widgets/cards/bet_summary_card.dart';
 import 'package:myoro_bet_tracker/widgets/cards/bets_table_card.dart';
 
 import '../../base_test_widget.dart';
-import '../../constants/bet_model_constants.dart';
+import '../../bet_model_constants.dart';
 
 void main() {
   testWidgets('HomeScreenBody Widget Test', (tester) async {

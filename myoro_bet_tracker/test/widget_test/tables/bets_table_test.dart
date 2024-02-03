@@ -5,7 +5,7 @@ import 'package:myoro_bet_tracker/blocs/bets_bloc/bets_bloc.dart';
 import 'package:myoro_bet_tracker/widgets/tables/bets_table.dart';
 
 import '../../base_test_widget.dart';
-import '../../constants/bet_model_constants.dart';
+import '../../bet_model_constants.dart';
 
 void main() {
   testWidgets('BetsTable Widget Test', (tester) async {

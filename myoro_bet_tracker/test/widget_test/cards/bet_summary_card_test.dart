@@ -5,7 +5,7 @@ import 'package:myoro_bet_tracker/widgets/cards/base_card.dart';
 import 'package:myoro_bet_tracker/widgets/cards/bet_summary_card.dart';
 
 import '../../base_test_widget.dart';
-import '../../constants/bet_model_constants.dart';
+import '../../bet_model_constants.dart';
 
 void main() {
   testWidgets('BetSummaryCard Widget Test', (tester) async {
