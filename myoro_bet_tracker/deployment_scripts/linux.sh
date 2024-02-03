@@ -24,7 +24,7 @@ echo "[Desktop Entry]" >> myoro_bet_tracker.desktop
 echo "Version=1.0.0+1" >> myoro_bet_tracker.desktop
 echo "Name=MyoroBetTracker" >> myoro_bet_tracker.desktop
 echo "Comment=An application to better document your betting history" >> myoro_bet_tracker.desktop
-echo "Exec=/usr/local/bin/MyoroBetTracker/MyoroBetTracker.AppImage" >> myoro_bet_tracker.desktop
+echo "Exec=/usr/local/bin/MyoroBetTracker/MyoroBetTracker" >> myoro_bet_tracker.desktop
 echo "Icon=/usr/local/bin/MyoroBetTracker/icon.png" >> myoro_bet_tracker.desktop
 echo "Type=Application" >> myoro_bet_tracker.desktop
 echo "Categories=Utility" >> myoro_bet_tracker.desktop
