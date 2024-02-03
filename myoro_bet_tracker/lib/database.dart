@@ -14,7 +14,10 @@ class Database {
   factory Database() => _singletonInstance;
   Database._internal();
 
-  static Future<String> getDatabasePath() async => join((await getApplicationSupportDirectory()).path, 'myoro_bet_tracker.db');
+  static Future<String> getDatabasePath() async {
+    print(join((await getApplicationSupportDirectory()).path, 'myoro_bet_tracker.db'));
+    return join((await getApplicationSupportDirectory()).path, 'myoro_bet_tracker.db');
+  }
 
   static Future<void> init() async {
     if (!Platform.isIOS && !Platform.isAndroid) sqflite.databaseFactory = databaseFactoryFfi;
