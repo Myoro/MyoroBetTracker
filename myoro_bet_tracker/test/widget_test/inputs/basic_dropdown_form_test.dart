@@ -10,7 +10,7 @@ void main() {
       BaseTestWidget(
         child: BasicDropdownForm(
           title: 'Title Working',
-          items: const [ 'This', 'is', 'a', 'test' ],
+          items: const ['This', 'is', 'a', 'test'],
           onChanged: (_) {},
         ),
       ),

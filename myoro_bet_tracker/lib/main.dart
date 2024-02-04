@@ -22,7 +22,7 @@ void main() async {
   }
 
   await Database.init();
-  if(kDebugMode) {
+  if (kDebugMode) {
     await Database.reset();
     await Database.init();
   }

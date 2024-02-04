@@ -10,6 +10,9 @@ class BasicTextFieldForm extends StatelessWidget {
   /// Title of [BasicTextFieldForm]
   final String title;
 
+  /// Width of [BaseTextField]
+  final double width;
+
   /// Input formatters of [BaseTextField]
   final List<TextInputFormatter> formatters;
 
@@ -22,6 +25,7 @@ class BasicTextFieldForm extends StatelessWidget {
     required this.title,
     required this.controller,
     this.formatters = const [],
+    required this.width,
   });
 
   @override
@@ -39,7 +43,7 @@ class BasicTextFieldForm extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             BaseTextField(
-              size: const Size(172, 40),
+              size: Size(width, 40),
               controller: controller,
               formatters: formatters,
             ),

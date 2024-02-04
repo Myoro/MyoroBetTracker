@@ -72,20 +72,22 @@ class BaseModal extends StatelessWidget {
             // Allows custom widgets like [TextHoverButton] to work propertly
             child: Column(
               children: [
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    if (title != null) Text(title!, style: titleStyle),
-                    SizedBox(width: size.width - 165),
-                    ButtonWithoutFeedback(
-                      onTap: () => Navigator.pop(context),
-                      child: Icon(
-                        Icons.close,
-                        size: 30,
-                        color: theme.colorScheme.onPrimary,
+                SizedBox(
+                  width: size.width,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      if (title != null) Text(title!, style: titleStyle),
+                      ButtonWithoutFeedback(
+                        onTap: () => Navigator.pop(context),
+                        child: Icon(
+                          Icons.close,
+                          size: 30,
+                          color: theme.colorScheme.onPrimary,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 content,
                 if (showFooterButtons) ...[

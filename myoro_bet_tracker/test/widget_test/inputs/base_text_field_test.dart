@@ -15,16 +15,7 @@ void main() {
       ),
     );
 
-    expect(
-      find.byWidgetPredicate((widget) => (
-        widget is SizedBox
-        &&
-        widget.width == 300
-        &&
-        widget.height == 400
-      )),
-      findsOneWidget
-    );
+    expect(find.byWidgetPredicate((widget) => (widget is SizedBox && widget.width == 300 && widget.height == 400)), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget);
   });
 }

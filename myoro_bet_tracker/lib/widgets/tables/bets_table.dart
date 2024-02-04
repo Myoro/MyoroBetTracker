@@ -110,7 +110,9 @@ class _BetsTableState extends State<BetsTable> {
                         if (titleCells.length >= 3) _NormalCell(text: bet.name ?? 'N/A'),
                         if (titleCells.length >= 4) _NormalCell(text: bet.sport ?? 'N/A'),
                         _NormalCell(text: '\$${bet.placed.toStringAsFixed(2)}'),
-                        _NormalCell(text: '\$${bet.gainedOrLost.toStringAsFixed(2)}'),
+                        _NormalCell(
+                          text: bet.gainedOrLost is double ? '\$${bet.gainedOrLost.toStringAsFixed(2)}' : bet.gainedOrLost,
+                        ),
                         if (titleCells.length == 5) _NormalCell(text: bet.datePlaced),
                         _Button(
                           icon: Icons.edit,
@@ -195,12 +197,15 @@ class _NormalCell extends StatelessWidget {
   const _NormalCell({required this.text});
 
   @override
-  Widget build(BuildContext context) => Text(
-        text,
-        style: Theme.of(context).textTheme.bodyMedium,
-        textAlign: TextAlign.center,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+  Widget build(BuildContext context) => Tooltip(
+        message: text,
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       );
 }
 

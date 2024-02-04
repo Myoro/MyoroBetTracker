@@ -4,7 +4,7 @@ class BetModel extends Equatable {
   final String? name;
   final String? sport;
   final double placed;
-  final double gainedOrLost;
+  final dynamic gainedOrLost;
   final String datePlaced;
 
   const BetModel({
@@ -19,14 +19,14 @@ class BetModel extends Equatable {
       : name = json['name'],
         sport = json['sport'],
         placed = double.parse(json['placed']),
-        gainedOrLost = double.parse(json['gained_or_lost']),
+        gainedOrLost = json['gained_or_lost'] != 'Pending' ? double.parse(json['gained_or_lost']) : json['gained_or_lost'],
         datePlaced = json['date_placed'];
 
   Map<String, dynamic> toJSON() => {
         'name': name,
         'sport': sport,
         'placed': placed.toStringAsFixed(2),
-        'gained_or_lost': gainedOrLost.toStringAsFixed(2),
+        'gained_or_lost': gainedOrLost is double ? gainedOrLost.toStringAsFixed(2) : gainedOrLost,
         'date_placed': datePlaced,
       };
 

@@ -15,6 +15,7 @@ void main() {
           obligatory: true,
           controller: TextEditingController(),
           onChanged: (_) {},
+          width: 100,
         ),
       ),
     );

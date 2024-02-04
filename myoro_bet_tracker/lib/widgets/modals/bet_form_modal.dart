@@ -43,7 +43,7 @@ class _BetFormModalState extends State<BetFormModal> {
 
   void finalizeBet() {
     // Validation
-    if (_moneyPlacedController.text.isEmpty || _gainedOrLostController.text.isEmpty) {
+    if (_moneyPlacedController.text.isEmpty || (_gainedOrLost != 'Pending' && _gainedOrLostController.text.isEmpty)) {
       _modalHeight.value = 381;
       Future.delayed(const Duration(milliseconds: 1500), () => _modalHeight.value = 351);
       return;
@@ -53,7 +53,9 @@ class _BetFormModalState extends State<BetFormModal> {
       name: _betNameController.text,
       sport: _betType,
       placed: double.parse(double.parse(_moneyPlacedController.text).toStringAsFixed(2)),
-      gainedOrLost: double.parse((double.parse(_gainedOrLostController.text) * (_gainedOrLost == 'Gained' ? 1 : -1)).toStringAsFixed(2)),
+      gainedOrLost: _gainedOrLost != 'Pending'
+          ? double.parse((double.parse(_gainedOrLostController.text) * (_gainedOrLost == 'Gained' ? 1 : -1)).toStringAsFixed(2))
+          : _gainedOrLost,
       datePlaced: _datePlacedController.text.isNotEmpty ? _datePlacedController.text : DateFormat('dd/MM/yyyy').format(DateTime.now()),
     );
 
@@ -74,7 +76,7 @@ class _BetFormModalState extends State<BetFormModal> {
 
     _betNameController.text = widget.bet!.name ?? '';
     _moneyPlacedController.text = widget.bet!.placed.toStringAsFixed(2);
-    _gainedOrLostController.text = widget.bet!.gainedOrLost.toStringAsFixed(2);
+    if (widget.bet!.gainedOrLost is double) _gainedOrLostController.text = widget.bet!.gainedOrLost.toStringAsFixed(2);
     _datePlacedController.text = widget.bet!.datePlaced;
     _betType = TypeOfBetEnum.values
         .firstWhere(
@@ -82,7 +84,11 @@ class _BetFormModalState extends State<BetFormModal> {
           orElse: () => TypeOfBetEnum.soccer,
         )
         .type;
-    _gainedOrLost = widget.bet!.gainedOrLost > 0 ? GainedOrLostEnum.gained.result : GainedOrLostEnum.lost.result;
+    _gainedOrLost = widget.bet!.gainedOrLost is double
+        ? widget.bet!.gainedOrLost > 0
+            ? GainedOrLostEnum.gained.result
+            : GainedOrLostEnum.lost.result
+        : GainedOrLostEnum.pending.result;
   }
 
   @override
@@ -110,17 +116,20 @@ class _BetFormModalState extends State<BetFormModal> {
                 BasicTextFieldForm(
                   title: 'Bet Name',
                   controller: _betNameController,
+                  width: 181.5,
                 ),
                 BasicDropdownForm(
                   title: 'Sport/Casino',
                   items: TypeOfBetEnum.values.map((value) => value.type).toList(),
                   onChanged: (value) => _betType = value,
+                  width: 181.5,
                 ),
                 BasicTextFieldForm(
                   title: '\$ Placed',
                   obligatory: true,
                   controller: _moneyPlacedController,
                   formatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+                  width: 181.5,
                 ),
                 DropdownAndTextFieldForm(
                   title: 'Gained/Lost',
@@ -128,11 +137,13 @@ class _BetFormModalState extends State<BetFormModal> {
                   obligatory: true,
                   onChanged: (value) => _gainedOrLost = value,
                   formatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+                  width: 71.5,
                 ),
                 BasicTextFieldForm(
                   title: 'Date Placed',
                   controller: _datePlacedController,
                   formatters: [DateFormatter()],
+                  width: 181.5,
                 ),
                 if (modalHeight != 351)
                   Text(

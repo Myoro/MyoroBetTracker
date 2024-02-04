@@ -1,6 +1,7 @@
 enum GainedOrLostEnum {
   gained('Gained'),
-  lost('Lost');
+  lost('Lost'),
+  pending('Pending');
 
   final String result;
 

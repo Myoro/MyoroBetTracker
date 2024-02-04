@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myoro_bet_tracker/widgets/cards/available_income_card.dart';
-import 'package:myoro_bet_tracker/widgets/cards/bet_summary_card.dart';
+import 'package:myoro_bet_tracker/widgets/cards/bets_analytics_card.dart';
 import 'package:myoro_bet_tracker/widgets/cards/bets_table_card.dart';
 
 class HomeScreenBody extends StatelessWidget {
@@ -12,9 +11,7 @@ class HomeScreenBody extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(17),
           children: const [
-            AvailableIncomeCard(),
-            SizedBox(height: 10),
-            BetSummaryCard(),
+            BetsAnalyticsCard(),
             SizedBox(height: 10),
             BetsTableCard(),
           ],

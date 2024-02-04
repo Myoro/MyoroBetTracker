@@ -9,7 +9,7 @@ void main() {
     await tester.pumpWidget(
       BaseTestWidget(
         child: BaseDropdown(
-          items: const [ 'This', 'is', 'a', 'test' ],
+          items: const ['This', 'is', 'a', 'test'],
           onChanged: (_) {},
         ),
       ),

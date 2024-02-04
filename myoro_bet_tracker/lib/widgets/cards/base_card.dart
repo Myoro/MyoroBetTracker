@@ -11,34 +11,11 @@ class BaseCard extends StatelessWidget {
   /// Additional height argument so the programmer doesn't have to wrap [BaseCard] with [SizedBox]
   final double? height;
 
-  /// Additional expanded argument so the programmer doesn't have to wrap [BaseCard] with [Expanded]
-  final bool expanded;
-
   /// Contents of [BaseCard]
   final Widget content;
 
   const BaseCard({
     super.key,
-    this.title,
-    this.width,
-    this.height,
-    this.expanded = false,
-    required this.content,
-  });
-
-  @override
-  Widget build(BuildContext context) => expanded
-      ? Expanded(child: _Widget(title: title, width: width, height: height, content: content))
-      : _Widget(title: title, width: width, height: height, content: content);
-}
-
-class _Widget extends StatelessWidget {
-  final String? title;
-  final double? width;
-  final double? height;
-  final Widget content;
-
-  const _Widget({
     this.title,
     this.width,
     this.height,
@@ -64,9 +41,9 @@ class _Widget extends StatelessWidget {
             if (title != null)
               Text(
                 title!,
-                style: theme.textTheme.titleMedium,
+                style: theme.textTheme.titleLarge,
               ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
             content,
           ],
         ),

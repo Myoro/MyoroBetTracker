@@ -15,9 +15,9 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
     int betsLost = 0;
 
     for (final BetModel bet in bets) {
-      netGainOrLossResult += bet.gainedOrLost;
+      netGainOrLossResult += bet.gainedOrLost is double ? bet.gainedOrLost : 0;
       totalMoneyPlacedOnBetsResult += bet.placed;
-      if (bet.gainedOrLost > 0) {
+      if (bet.gainedOrLost is double && bet.gainedOrLost > 0) {
         betsWon += 1;
       } else {
         betsLost += 1;
