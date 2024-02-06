@@ -26,7 +26,7 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
 
     return BetsState(
       bets: bets,
-      netGainOrLoss: netGainOrLossResult,
+      netGainOrLoss: netGainOrLossResult - totalMoneyPlacedOnBetsResult,
       totalMoneyPlacedOnBets: totalMoneyPlacedOnBetsResult,
       winLossPercentage: (betsWon / (betsLost + betsWon)) * 100,
     );
