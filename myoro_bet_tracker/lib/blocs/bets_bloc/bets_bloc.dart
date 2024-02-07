@@ -9,15 +9,15 @@ import 'package:myoro_bet_tracker/models/bet_model.dart';
 class BetsBloc extends Bloc<BetsEvent, BetsState> {
   /// To calculate netGainOrLoss, totalMoneyPlacedOnBets, & winLossPercentage
   BetsState getBetAnalytics(List<BetModel> bets) {
-    double netGainOrLossResult = 0;
+    double netGainResult = 0;
     double totalMoneyPlacedOnBetsResult = 0;
     int betsWon = 0;
     int betsLost = 0;
 
     for (final BetModel bet in bets) {
-      netGainOrLossResult += bet.gainedOrLost is double ? bet.gainedOrLost : 0;
       totalMoneyPlacedOnBetsResult += bet.placed;
       if (bet.gainedOrLost is double && bet.gainedOrLost > 0) {
+        netGainResult += bet.gainedOrLost;
         betsWon += 1;
       } else {
         betsLost += 1;
@@ -26,7 +26,7 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
 
     return BetsState(
       bets: bets,
-      netGainOrLoss: netGainOrLossResult - totalMoneyPlacedOnBetsResult,
+      netGainOrLoss: netGainResult - totalMoneyPlacedOnBetsResult,
       totalMoneyPlacedOnBets: totalMoneyPlacedOnBetsResult,
       winLossPercentage: (betsWon / (betsLost + betsWon)) * 100,
     );
