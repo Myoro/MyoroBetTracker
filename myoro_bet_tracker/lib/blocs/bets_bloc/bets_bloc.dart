@@ -16,7 +16,7 @@ class BetsBloc extends Bloc<BetsEvent, BetsState> {
 
     for (final BetModel bet in bets) {
       totalMoneyPlacedOnBetsResult += bet.gainedOrLost == 'Pending' ? 0 : bet.placed;
-      if(bet.gainedOrLost is double) {
+      if (bet.gainedOrLost is double) {
         if (bet.gainedOrLost > 0) {
           netGainResult += bet.gainedOrLost;
           betsWon += 1;
