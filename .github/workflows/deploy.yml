@@ -9,13 +9,16 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     steps:
+      - name: Read README of v1.0.0 (Grab Installation Instructions)
+        id: readme_instructions
+        run: echo ::set-output name=content::$(cat README.md)
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.event.head_commit.message }}
           release_name: ${{ github.event.head_commit.message }}
-          body: ${{ github.event.head_commit.message }}
+          body: ${{ steps.readme_instructions.outputs.content }}
           draft: false
           prerelease: false
         env:
