@@ -18,6 +18,8 @@ jobs:
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy_linux:
     needs: create_release
     runs-on: ubuntu-latest
