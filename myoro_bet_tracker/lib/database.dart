@@ -19,7 +19,6 @@ class Database {
   static Future<void> init() async {
     if (!Platform.isIOS && !Platform.isAndroid) sqflite.databaseFactory = databaseFactoryFfi;
 
-    print(await getDatabasePath());
     _database = await sqflite.openDatabase(await getDatabasePath());
 
     // Dark mode table
