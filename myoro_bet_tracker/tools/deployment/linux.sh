@@ -46,6 +46,6 @@ mv data MyoroBetTracker
 mv lib MyoroBetTracker
 mv myoro_bet_tracker MyoroBetTracker/MyoroBetTracker
 mv install.sh MyoroBetTracker/
-cp ../../../../../icons/250x250.png MyoroBetTracker/icon.png
+cp ../../../../../../icons/250x250.png MyoroBetTracker/icon.png
 zip -r MyoroBetTrackerLinux.zip -r MyoroBetTracker
 rm -rf MyoroBetTracker
