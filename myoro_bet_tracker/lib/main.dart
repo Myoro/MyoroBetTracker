@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myoro_bet_tracker/blocs/available_income_cubit.dart';
@@ -22,10 +21,10 @@ void main() async {
   }
 
   await Database.init();
-  if (kDebugMode) {
-    await Database.reset();
-    await Database.init();
-  }
+  // if (kDebugMode) {
+  //   await Database.reset();
+  //   await Database.init();
+  // }
   final bool isDarkMode = (await Database.get('dark_mode'))['enabled'] == 1 ? true : false;
   final List<BetModel> bets = (await Database.select('bets')).map((json) => BetModel.fromJSON(json)).toList();
   final double availableIncome = double.parse(double.parse((await Database.get('available_income'))['income'] as String).toStringAsFixed(2));
