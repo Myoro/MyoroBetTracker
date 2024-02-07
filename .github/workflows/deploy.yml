@@ -1,0 +1,25 @@
+name: Deploy MyoroBetTracker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub Release
+        run: echo "Step 1"
+  deploy_linux:
+    needs: create_release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Binaries for Linux
+        run: echo "Step 2"
+  deploy_windows:
+    needs: create_release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Binaries for Windows
+        run: echo "Step 3"
