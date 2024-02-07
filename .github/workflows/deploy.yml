@@ -8,10 +8,12 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
+    outputs:
+      readme_instructions: ${{ steps.readme_content.outputs.content }}
     steps:
       - name: Read README of v1.0.0 (Grab Installation Instructions)
         id: readme_instructions
-        run: echo ::set-output name=content::$(echo PLEASE)
+        run: echo $(PLEASE)
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
