@@ -8,19 +8,17 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
-    outputs:
-      readme_instructions: ${{ steps.readme_content.outputs.content }}
     steps:
       - name: Read README of v1.0.0 (Grab Installation Instructions)
         id: readme_instructions
-        run: echo $(PLEASE)
+        run: echo "release_readme=PLEASE" >> "$GITHUB_ENV"
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.event.head_commit.message }}
           release_name: ${{ github.event.head_commit.message }}
-          body: ${{ steps.readme_instructions.outputs.content }}
+          body: $action_state
           draft: false
           prerelease: false
         env:
