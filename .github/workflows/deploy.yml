@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Read README of v1.0.0 (Grab Installation Instructions)
         id: readme_instructions
-        run: echo ::set-output name=content::$(cat README.md)
+        run: echo ::set-output name=content::$(echo PLEASE)
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
