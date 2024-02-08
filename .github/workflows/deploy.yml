@@ -44,21 +44,3 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  deploy_linux:
-    needs: create_release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get MyoroBetTracker code
-        uses: actions/checkout@v3
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-      - name: Create temp folder
-      - name: Build
-        run: cd myoro_bet_tracker && bash tools/deployment/linux.sh
-      - name: Deploy
-        uses: actions/upload-artifact@v2
-        with:
-          name: MyoroBetTrackerLinux
-          path: myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip
