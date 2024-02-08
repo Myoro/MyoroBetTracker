@@ -18,7 +18,8 @@ jobs:
         with:
           tag_name: ${{ github.event.head_commit.message }}
           release_name: ${{ github.event.head_commit.message }}
-          body: ${{ steps.release_readme.outputs.stdout }}
+          body: what the fuck "what the fuck"
+          # body: ${{ steps.release_readme.outputs.stdout }}
           draft: false
           prerelease: false
         env:
