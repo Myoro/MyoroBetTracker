@@ -11,14 +11,17 @@ jobs:
     steps:
       - name: Get Release README
         id: release_readme
-        run: echo $(cat README.md)
+        run: |
+          git fetch --tags
+          git checkout tags\1.0.0+1 -b temp-branch
+          echo $(cat README.md)
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.event.head_commit.message }}
           release_name: ${{ github.event.head_commit.message }}
-          body:
+          body: ${{ steps.release_readme.outputs.stdout }}
           draft: false
           prerelease: false
         env:
