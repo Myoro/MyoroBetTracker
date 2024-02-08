@@ -59,6 +59,5 @@ jobs:
       - name: Deploy
         uses: actions/upload-artifact@v2
         with:
-          name: MyoroBetTrackerWindows
-          run: pwd
+          name: MyoroBetTrackerLinux
           path: myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip
