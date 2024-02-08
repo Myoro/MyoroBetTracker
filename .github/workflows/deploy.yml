@@ -26,7 +26,7 @@ jobs:
           1. Download `MyoroBetTrackerWindows.zip`\n\n\
           2. Unzip `MyoroBetTrackerWindows.zip` and place whereever you like\n\n\
           ## Android\n\n\
-          Download and install `MyoroBetTracker.apk`\n\n\
+          Download and install `MyoroBetTracker.apk`\n\n"
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
