@@ -13,27 +13,54 @@ jobs:
         id: release_readme
         run: |
           echo "::set-output name=content::\
-          # Installing\n\n\
-          ## Linux\n\n\
-          ```\n\n\
-          cd /home/$USER/Downloads;\n\n\
-          curl -LOJ https://github.com/Myoro/MyoroBetTracker/releases/download/1.0.0%2B1/MyoroBetTrackerLinux.zip;\n\n\
-          unzip MyoroBetTrackerLinux.zip;\n\n\
-          cd MyoroBetTracker;\n\n\
-          sudo bash install.sh\n\n\
-          ```\n\n\
-          ## Windows\n\n\
-          1. Download `MyoroBetTrackerWindows.zip`\n\n\
-          2. Unzip `MyoroBetTrackerWindows.zip` and place whereever you like\n\n\
-          ## Android\n\n\
-          Download and install `MyoroBetTracker.apk`\n\n"
+          # Installing
+
+
+          ## Linux
+
+
+          ```
+
+
+          cd /home/$USER/Downloads;
+
+
+          curl -LOJ https://github.com/Myoro/MyoroBetTracker/releases/download/1.0.0%2B1/MyoroBetTrackerLinux.zip;
+
+
+          unzip MyoroBetTrackerLinux.zip;
+
+
+          cd MyoroBetTracker;
+
+
+          sudo bash install.sh
+
+
+          ```
+
+
+          ## Windows
+
+
+          1. Download `MyoroBetTrackerWindows.zip`
+
+
+          2. Unzip `MyoroBetTrackerWindows.zip` and place whereever you like
+
+
+          ## Android
+
+
+          Download and install `MyoroBetTracker.apk`"
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.event.head_commit.message }}
           release_name: ${{ github.event.head_commit.message }}
-          body: ${{ steps.release_readme.outputs.content }}
+          body: |
+            ${{ steps.release_readme.outputs.content }}
           draft: false
           prerelease: false
         env:
