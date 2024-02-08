@@ -9,14 +9,15 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Release README
+        id: release_readme
+        run: echo $(cat README.md)
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: 'test'
-          release_name: 'test'
-          # tag_name: ${{ github.event.head_commit.message }}
-          # release_name: ${{ github.event.head_commit.message }}
+          tag_name: ${{ github.event.head_commit.message }}
+          release_name: ${{ github.event.head_commit.message }}
           body:
           draft: false
           prerelease: false
