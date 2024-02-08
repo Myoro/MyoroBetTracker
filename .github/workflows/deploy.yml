@@ -11,10 +11,7 @@ jobs:
     steps:
       - name: Get Release README
         id: release_readme
-        run: |
-          git fetch --tags
-          git checkout tags\1.0.0+1 -b temp-branch
-          echo $(cat README.md)
+        run: echo $(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
