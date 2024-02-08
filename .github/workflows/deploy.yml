@@ -11,7 +11,9 @@ jobs:
     steps:
       - name: Get Release README
         id: release_readme
-        run: echo "::set-output name=content::$(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)"
+        run: |
+          content=$(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)
+          echo "::set-output name=content::$content"
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -37,7 +39,14 @@ jobs:
         run: cd myoro_bet_tracker && bash tools/deployment/linux.sh
   deploy_windows:
     needs: create_release
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    shell: bash
     steps:
-      - name: Build Binaries for Windows
-        run: echo "Step 3"
+      - name: Get MyoroBetTracker code
+        uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Deploy
+        run: cd myoro_bet_tracker && bash tools/deployment/linux.sh
