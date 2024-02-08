@@ -11,14 +11,16 @@ jobs:
     steps:
       - name: Get Release README
         id: release_readme
-        run: echo $(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)
+        run: echo "::set-output name=content::$(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)"
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ github.event.head_commit.message }}
-          release_name: ${{ github.event.head_commit.message }}
-          body: what the fuck "what the fuck"
+          tag_name: $GITHUB_EVENT_NAME
+          release_name: $GITHUB_EVENT_NAME
+          #tag_name: ${{ github.event.head_commit.message }}
+          #release_name: ${{ github.event.head_commit.message }}
+          body: $GITHUB_ENV.release_readme
           # body: ${{ steps.release_readme.outputs.stdout }}
           draft: false
           prerelease: false
