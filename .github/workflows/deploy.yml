@@ -15,7 +15,7 @@ jobs:
           description="
           # Installing
           ## Linux
-          ```
+          \`\`\`
           cd /home/$USER/Downloads;
           "
           description="${description//'%'/'%25'}"
