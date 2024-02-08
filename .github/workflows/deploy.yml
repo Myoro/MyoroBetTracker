@@ -61,4 +61,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: MyoroBetTrackerLinux
-          path: ../MyoroBetTracker/myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip
+          path: myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip
