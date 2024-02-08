@@ -57,7 +57,7 @@ jobs:
       - name: Build
         run: |
           cd myoro_bet_tracker && bash tools/deployment/linux.sh
-          mv build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip $GITHUB_WORKSPACE
+          mv myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip $GITHUB_WORKSPACE
       - name: Deploy
         uses: actions/upload-artifact@v2
         with:
