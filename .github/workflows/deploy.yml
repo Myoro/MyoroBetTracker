@@ -20,7 +20,8 @@ jobs:
         with:
           tag_name: ${{ github.event.head_commit.message }}
           release_name: ${{ github.event.head_commit.message }}
-          body: ${{ steps.release_readme.outputs.content }}
+          body: |
+            ${{ steps.release_readme.outputs.content }}
           draft: false
           prerelease: false
         env:
@@ -41,4 +42,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: MyoroBetTrackerWindows
+          run: pwd
           path: myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip
