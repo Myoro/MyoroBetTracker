@@ -27,8 +27,14 @@ jobs:
     needs: create_release
     runs-on: ubuntu-latest
     steps:
-      - name: Build Binaries for Linux
-        run: echo "Step 2"
+      - name: Get MyoroBetTracker code
+        uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Deploy
+        run: cd myoro_bet_tracker && bash tools/deployment/linux.sh
   deploy_windows:
     needs: create_release
     runs-on: ubuntu-latest
