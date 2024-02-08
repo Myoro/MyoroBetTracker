@@ -35,5 +35,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - name: Deploy
+      - name: Build
         run: cd myoro_bet_tracker && bash tools/deployment/linux.sh
+      - name: Deploy
+        uses: actions/upload-artifact@v2
+        with:
+          name: MyoroBetTrackerWindows
+          path: myoro_bet_tracker/build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip
