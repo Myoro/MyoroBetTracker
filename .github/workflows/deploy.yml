@@ -11,7 +11,9 @@ jobs:
     steps:
       - name: Get Release README
         id: release_readme
-        run: echo "::set-output name=content::$(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)"
+        run: |
+          content=$(curl https://raw.githubusercontent.com/Myoro/MyoroBetTracker/main/myoro_bet_tracker/tools/deployment/README.md)
+          echo "::set-output name=content::$content"
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
