@@ -58,3 +58,8 @@ jobs:
         run: |
           cd myoro_bet_tracker && bash tools/deployment/linux.sh
           mv build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip $GITHUB_WORKSPACE
+      - name: Deploy
+        uses: actions/upload-artifact@v2
+        with:
+          name: MyoroBetTrackerLinux.zip
+          path: $GITHUB_WORKSPACE/MyoroBetTrackerLinux.zip
