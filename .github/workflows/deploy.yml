@@ -50,3 +50,11 @@ jobs:
     steps:
       - name: Get MyoroBetTracker code
         uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Build
+        run: |
+          cd myoro_bet_tracker && bash tools/deployment/linux.sh
+          mv build/linux/x64/release/bundle/MyoroBetTrackerLinux.zip $GITHUB_WORKSPACE
